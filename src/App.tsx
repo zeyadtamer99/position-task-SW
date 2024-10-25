@@ -5,6 +5,7 @@ import theme from "./assets/mui-theme";
 import Login from "./pages/Registeration/Login";
 import SignUp from "./pages/Registeration/SignUp";
 import SplashScreen from "./pages/SplashScreen";
+import AnalyticsPage from "./pages/Analytics/AnalyticsPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<SplashScreen />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/analytics" element={<AnalyticsPage />} />
         </Routes>
       </Router>
     </ThemeProvider>

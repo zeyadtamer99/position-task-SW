@@ -45,7 +45,7 @@ const SignUp: React.FC = () => {
     try {
       const result = await signInWithPopup(auth, selectedProvider);
       console.log("User signed up successfully:", result.user);
-      navigate("/home");
+      navigate("/analytics");
     } catch (error) {
       console.error("Error during social sign-up:", error);
       setSnackbarMessage("Error during social sign-up. Please try again.");
@@ -80,7 +80,7 @@ const SignUp: React.FC = () => {
         password
       );
       console.log("User signed up successfully:", userCredential.user);
-      navigate("/home");
+      navigate("/analytics");
     } catch (error) {
       console.error("Error during form sign-up:", error);
       setSnackbarMessage("Sign-up failed. Please try again.");

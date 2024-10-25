@@ -68,7 +68,7 @@ export const pageTitleStyle = {
 // Reusable button style
 export const reusableButtonStyle = {
   backgroundColor: "#5d47ff",
-  borderRadius: "50px",
+  borderRadius: "10px",
   color: "#fff",
   width: "100%",
   height: "50px",

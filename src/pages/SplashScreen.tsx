@@ -25,7 +25,7 @@ const imageContainerStyle = {
   position: "relative",
 };
 
-const Home: React.FC = () => {
+const SplashScreen: React.FC = () => {
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
 
@@ -185,4 +185,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default SplashScreen;

@@ -6,7 +6,7 @@ import "react-circular-progressbar/dist/styles.css";
 import { mockPlotData } from "../../mockData/mockPlotData";
 
 const SavedJobsPlot: React.FC = () => {
-  const { percentage, totalJobs } = mockPlotData.SavedJobs;
+  const { percentage } = mockPlotData.SavedJobs;
 
   return (
     <Box
@@ -22,23 +22,30 @@ const SavedJobsPlot: React.FC = () => {
         height: "100%", // Consistent height
       }}
     >
-      <Typography variant="h6" sx={{ fontWeight: 600, marginBottom: "8px" }}>
-        Saved Jobs
-      </Typography>
-      <CircularProgressbar
-        value={percentage}
-        text={`${percentage}%`}
-        styles={buildStyles({
-          textColor: "#000",
-          pathColor: "#5d47ff",
-          trailColor: "#d6d6d6",
-          textSize: "0.5rem",
-        })}
-        strokeWidth={6}
-      />
-      <Typography variant="body2" sx={{ marginTop: "8px" }}>
-        Total Saved Jobs: {totalJobs}
-      </Typography>
+      {/* Title and subtitle container with left alignment */}
+      <Box sx={{ width: "100%", textAlign: "left", marginBottom: "16px" }}>
+        <Typography variant="h6" sx={{ fontWeight: 600, marginBottom: "4px" }}>
+          Saved Jobs
+        </Typography>
+        <Typography variant="body2" sx={{ color: "#888" }}>
+          Saved in total
+        </Typography>
+      </Box>
+
+      <Box sx={{ width: "70%" }}>
+        {/* Adjust width for better visual appeal */}
+        <CircularProgressbar
+          value={percentage}
+          text={`${percentage}%`}
+          styles={buildStyles({
+            textColor: "#4a4a4a", // Darker color for text
+            pathColor: "#7b61ff", // Gradient-like color to match the design
+            trailColor: "#ececec", // Lighter trail color for better contrast
+            textSize: "1rem", // Larger text for better readability
+          })}
+          strokeWidth={15} // Slightly thicker stroke width
+        />
+      </Box>
     </Box>
   );
 };

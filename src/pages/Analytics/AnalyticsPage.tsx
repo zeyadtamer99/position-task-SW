@@ -25,6 +25,7 @@ const plotTypes = [
 const AnalyticsPage: React.FC = () => {
   const [plots, setPlots] = useState<string[]>(["Overview"]);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [hoveredPlotIndex, setHoveredPlotIndex] = useState<number | null>(null);
 
   const handleAddPlot = (plotType: string) => {
     setPlots([...plots, plotType]);
@@ -90,20 +91,27 @@ const AnalyticsPage: React.FC = () => {
     const plotWidth = getPlotWidth(plotType, previousPlotType, nextPlotType);
 
     return (
-      <Box key={index} sx={{ width: plotWidth, height: plotHeight }}>
+      <Box
+        key={index}
+        sx={{ width: plotWidth, height: plotHeight }}
+        onMouseEnter={() => setHoveredPlotIndex(index)} // Set hovered index on mouse enter
+        onMouseLeave={() => setHoveredPlotIndex(null)} // Clear hovered index on mouse leave
+      >
         <Box sx={{ position: "relative" }}>
-          <Button
-            type="text"
-            onClick={() => handleRemovePlot(plotType)}
-            icon={<CloseOutlined style={{ fontSize: "1.5em" }} />}
-            style={{
-              position: "absolute",
-              top: "8px",
-              right: "8px",
-              zIndex: 1,
-              color: "red",
-            }}
-          />
+          {hoveredPlotIndex === index && ( // Show the button only if this plot is hovered
+            <Button
+              type="text"
+              onClick={() => handleRemovePlot(plotType)}
+              icon={<CloseOutlined style={{ fontSize: "1.5em" }} />}
+              style={{
+                position: "absolute",
+                top: "8px",
+                right: "8px",
+                zIndex: 1,
+                color: "red",
+              }}
+            />
+          )}
         </Box>
         {renderPlotComponent(plotType)}
       </Box>

@@ -1,6 +1,6 @@
 // src/pages/AnalyticsPage.tsx
 import React, { useState } from "react";
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import NewVisitsPlot from "./components/NewVisitsPlot";
 import OverviewPlot from "./components/OverviewPlot";
 import SavedJobsPlot from "./components/SavedJobsPlot";
@@ -10,6 +10,7 @@ import AddPlotModal from "./components/AddPlotModal";
 import BestPerformingJobsPlot from "./components/BestPerformingJobsPlot";
 import Sidebar from "../../components/Sidebar";
 import { CloseOutlined } from "@ant-design/icons";
+import { Button } from "antd";
 
 const plotTypes = [
   "Overview",
@@ -179,19 +180,21 @@ const AnalyticsPage: React.FC = () => {
                     position: "relative", // Needed for positioning the delete button
                   }}
                 >
-                  {/* X icon button */}
-                  <IconButton
+                  {/* Close icon button */}
+                  <Button
+                    type="text"
                     onClick={() => handleRemovePlot(plotType)}
-                    sx={{
+                    icon={<CloseOutlined style={{ fontSize: "1.5em" }} />}
+                    style={{
                       position: "absolute",
                       top: "8px",
                       right: "8px",
                       zIndex: 1,
+                      color: "red",
                     }}
-                  >
-                    <CloseOutlined />
-                  </IconButton>
+                  />
                 </Box>
+
                 {renderPlot(plotType)}
               </Box>
             );

@@ -1,3 +1,4 @@
+// src/assets/global-styles.tsx
 const breakpoints = {
   sm: 500,
   md: 768,
@@ -36,8 +37,6 @@ export const cardStyle = {
   textAlign: "center",
 };
 
-// src/assets/global-styles.tsx
-
 // Form container style with dynamic background gradient
 export const formContainerStyle = (gradient: "blue" | "red") => ({
   display: "flex",
@@ -66,12 +65,20 @@ export const pageTitleStyle = {
   fontWeight: 700,
 };
 
-// Button style
-export const buttonStyle = {
-  width: { xs: "100%", md: "15%" },
-  height: { xs: "2rem", md: "50px" },
-  fontSize: { xs: "0.5rem", md: "1rem" },
-  borderRadius: "12px",
+// Reusable button style
+export const reusableButtonStyle = {
+  backgroundColor: "#5d47ff",
+  borderRadius: "50px",
+  color: "#fff",
+  width: "100%",
+  height: "50px",
+  fontSize: "1rem",
+  textTransform: "none",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: "0 24px",
+  transition: "all 0.3s ease",
 };
 
 // Style for typography div

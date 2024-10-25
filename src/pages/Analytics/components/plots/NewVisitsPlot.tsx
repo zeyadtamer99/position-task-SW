@@ -3,7 +3,7 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { mockPlotData } from "../mockData/mockPlotData";
+import { mockPlotData } from "../../mockData/mockPlotData";
 
 const NewVisitsPlot: React.FC = () => {
   const { percentage, totalVisits } = mockPlotData.NewVisits;

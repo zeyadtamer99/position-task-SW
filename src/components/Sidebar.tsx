@@ -17,11 +17,11 @@ const Sidebar: React.FC = () => {
       }}
     >
       <img
-        src="/src/assets/images/Logo-white.png"
+        src="src\assets\images\swipework_logo.jpg"
         alt="Logo"
         style={{
-          width: "80%",
-          maxWidth: "150px",
+          width: "100%",
+          maxWidth: "500px",
         }}
       />
     </Box>

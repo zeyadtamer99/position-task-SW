@@ -16,7 +16,7 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from "recharts";
-import { mockPlotData } from "../mockData/mockPlotData";
+import { mockPlotData } from "../../mockData/mockPlotData";
 
 // Define a type for the filter options
 type FilterType = "views" | "clicks";

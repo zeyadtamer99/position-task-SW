@@ -4,14 +4,18 @@ import { Box, Typography } from "@mui/material";
 
 interface AddPlotButtonProps {
   onClick: () => void;
+  height?: string; // Optional height prop
 }
 
-const AddPlotButton: React.FC<AddPlotButtonProps> = ({ onClick }) => {
+const AddPlotButton: React.FC<AddPlotButtonProps> = ({
+  onClick,
+  height = "500px",
+}) => {
   return (
     <Box
       sx={{
-        width: { xs: "180px", sm: "200px", md: "240px" }, // Responsive width
-        height: { xs: "180px", sm: "200px", md: "240px" }, // Responsive height
+        width: "70%",
+        height: height,
         backgroundColor: "#ffffff",
         borderRadius: "16px",
         display: "flex",
@@ -19,12 +23,12 @@ const AddPlotButton: React.FC<AddPlotButtonProps> = ({ onClick }) => {
         justifyContent: "center",
         cursor: "pointer",
         boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-        transition: "box-shadow 0.3s ease", // Smooth transition for the box shadow
+        transition: "box-shadow 0.3s ease",
         "&:hover": {
           boxShadow: "0 8px 18px rgba(0, 0, 0, 0.2)",
         },
         "&:hover .inner-box": {
-          transform: "scale(1.1)", // Scale up the inner box on hover
+          transform: "scale(1.1)",
         },
       }}
       onClick={onClick}
@@ -32,20 +36,20 @@ const AddPlotButton: React.FC<AddPlotButtonProps> = ({ onClick }) => {
       <Box
         className="inner-box"
         sx={{
-          width: { xs: "120px", sm: "140px", md: "150px" }, // Responsive circle size
-          height: { xs: "120px", sm: "140px", md: "150px" },
+          width: { xs: "130px", sm: "160px", md: "180px" },
+          height: { xs: "130px", sm: "160px", md: "180px" },
           borderRadius: "50%",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-          transition: "transform 0.3s ease", // Smooth transition for the scale effect
+          transition: "transform 0.3s ease",
         }}
       >
         <Typography
           sx={{
             fontWeight: 600,
-            fontSize: { xs: "0.9rem", sm: "1rem" }, // Responsive font size
+            fontSize: { xs: "1rem", sm: "1.1rem" },
             color: "black",
             textAlign: "center",
           }}

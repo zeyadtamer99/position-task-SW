@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@mui/material";
 import { useTable } from "react-table";
-import { mockPlotData } from "../mockData/mockPlotData";
+import { mockPlotData } from "../../mockData/mockPlotData";
 
 // Define the data structure for the table rows
 const BestPerformingJobsPlot: React.FC = () => {

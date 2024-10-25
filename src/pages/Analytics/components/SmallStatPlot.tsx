@@ -24,8 +24,8 @@ const SmallStatPlot: React.FC<SmallStatPlotProps> = ({
         boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
         display: "flex",
         alignItems: "center",
-        width: "100%",
-        height: "100%",
+        width: "100%", // Full width of the parent
+        height: "100%", // Inherit height from parent
       }}
     >
       <Box

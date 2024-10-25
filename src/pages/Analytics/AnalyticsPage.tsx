@@ -93,12 +93,37 @@ const AnalyticsPage: React.FC = () => {
             alignItems: "flex-start",
           }}
         >
-          {plots.map((plotType, index) => (
-            <Box key={index} sx={{ width: { xs: "100%", md: "45%" } }}>
-              {renderPlot(plotType)}
-            </Box>
-          ))}
-          <Box sx={{ width: { xs: "100%", md: "45%" } }}>
+          {plots.map((plotType, index) => {
+            // Determine the height of the current plot
+            const previousPlotType = index > 0 ? plots[index - 1] : null;
+            const isAdjacentToTallPlot =
+              previousPlotType === "Overview" ||
+              previousPlotType === "Best Performing Jobs";
+
+            const plotHeight = isAdjacentToTallPlot ? "500px" : "300px";
+
+            return (
+              <Box
+                key={index}
+                sx={{
+                  width:
+                    plotType === "Overview" ||
+                    plotType === "Best Performing Jobs"
+                      ? "65%"
+                      : "25%",
+                  height:
+                    plotType === "Followers" ||
+                    plotType === "Applies" ||
+                    plotType === "Hires"
+                      ? plotHeight
+                      : "500px",
+                }}
+              >
+                {renderPlot(plotType)}
+              </Box>
+            );
+          })}
+          <Box sx={{ width: "30%" }}>
             <AddPlotButton onClick={() => setModalOpen(true)} />
           </Box>
         </Box>

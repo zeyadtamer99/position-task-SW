@@ -54,8 +54,8 @@ const OverviewPlot: React.FC = () => {
         borderRadius: "16px",
         padding: "24px",
         boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-        width: "100%", // Set a specific width
-        height: "70%", // Set a specific height
+        width: "100%", // Ensure it takes full width as defined in the parent container
+        height: "500px", // Set a consistent height for all plots
       }}
     >
       <Typography variant="h6" sx={{ fontWeight: 600, marginBottom: "16px" }}>

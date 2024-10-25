@@ -13,13 +13,13 @@ const NewVisitsPlot: React.FC = () => {
       sx={{
         backgroundColor: "#fff",
         borderRadius: "16px",
-        padding: "16px", // Reduced padding
+        padding: "16px",
         boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        width: "55%", // Set a specific width
-        height: "50%", // Set a specific height
+        width: "100%", // Full width of the parent
+        height: "500px", // Consistent height
       }}
     >
       <Typography variant="h6" sx={{ fontWeight: 600, marginBottom: "8px" }}>

@@ -1,6 +1,7 @@
 // src/components/Sidebar.tsx
 import React from "react";
 import { Box } from "@mui/material";
+import logo from "../../src/assets/images/swipework_logo.jpg";
 
 const Sidebar: React.FC = () => {
   return (
@@ -17,7 +18,7 @@ const Sidebar: React.FC = () => {
       }}
     >
       <img
-        src="src\assets\images\swipework_logo.jpg"
+        src={logo}
         alt="Logo"
         style={{
           width: "100%",

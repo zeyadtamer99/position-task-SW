@@ -13,6 +13,7 @@ import SocialButtons from "./components/SocialButtons"; // Reusing SocialButtons
 import LoginForm from "./components/LoginForm";
 import { Typography } from "antd";
 import AuthHeader from "./components/AuthHeader";
+import loginIllustration from "../../assets/images/12.png";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -143,7 +144,7 @@ const Login: React.FC = () => {
           }}
         >
           <img
-            src="/src/assets/images/12.png"
+            src={loginIllustration}
             alt="Login Illustration"
             style={{
               maxHeight: "80%",

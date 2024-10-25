@@ -9,12 +9,12 @@ import {
 } from "../assets/global-styles";
 import { RightOutlined } from "@ant-design/icons";
 import AuthHeader from "./Registeration/components/AuthHeader";
+import image1 from "../assets/images/2.png";
+import image2 from "../assets/images/11.png";
+import image3 from "../assets/images/12.png";
 
-const images = [
-  "/src/assets/images/2.png",
-  "/src/assets/images/11.png",
-  "/src/assets/images/12.png",
-];
+// Update the images array to use the imported variables
+const images = [image1, image2, image3];
 
 // Styles used only within the Home component
 const imageContainerStyle = {

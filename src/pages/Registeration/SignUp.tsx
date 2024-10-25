@@ -15,6 +15,7 @@ import SocialButtons from "./components/SocialButtons";
 import { validatePassword } from "./utils";
 import { Typography } from "antd";
 import AuthHeader from "./components/AuthHeader";
+import signupIllustration from "../../assets/images/2.png";
 
 const SignUp: React.FC = () => {
   const navigate = useNavigate();
@@ -170,7 +171,7 @@ const SignUp: React.FC = () => {
           }}
         >
           <img
-            src="/src/assets/images/2.png" // Replace with your GIF source
+            src={signupIllustration}
             alt="Signup Illustration"
             style={{
               maxHeight: "80%",

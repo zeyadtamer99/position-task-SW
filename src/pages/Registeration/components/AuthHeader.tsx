@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
+import logo from "../../../assets/images/Logo-white.png";
 
 interface AuthHeaderProps {
   subtitle: string; // New prop for subtitle text
@@ -20,7 +21,7 @@ const AuthHeader: React.FC<AuthHeaderProps> = ({ subtitle }) => {
       }}
     >
       <img
-        src="/src/assets/images/Logo-white.png"
+        src={logo}
         alt="Logo"
         style={{
           width: "60vw",

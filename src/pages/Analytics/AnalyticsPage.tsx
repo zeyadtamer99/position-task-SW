@@ -3,8 +3,12 @@ import React, { useState } from "react";
 import { Box, Typography } from "@mui/material";
 import NewVisitsPlot from "./components/NewVisitsPlot";
 import OverviewPlot from "./components/OverviewPlot";
+import SavedJobsPlot from "./components/SavedJobsPlot";
+import SmallStatPlot from "./components/SmallStatPlot";
 import AddPlotButton from "./components/AddPlotButton";
 import AddPlotModal from "./components/AddPlotModal";
+import BestPerformingJobsPlot from "./components/BestPerformingJobsPlot";
+import Sidebar from "../../components/Sidebar";
 
 const AnalyticsPage: React.FC = () => {
   const [plots, setPlots] = useState<string[]>(["Overview"]);
@@ -21,6 +25,37 @@ const AnalyticsPage: React.FC = () => {
         return <OverviewPlot />;
       case "New Visits":
         return <NewVisitsPlot />;
+      case "Saved Jobs":
+        return <SavedJobsPlot />;
+      case "Best Performing Jobs":
+        return <BestPerformingJobsPlot />;
+      case "Followers":
+        return (
+          <SmallStatPlot
+            emoji="👤"
+            title="Followers"
+            number={2500}
+            description="New followers this month"
+          />
+        );
+      case "Applies":
+        return (
+          <SmallStatPlot
+            emoji="✉️"
+            title="Applies"
+            number={123}
+            description="Job applications sent"
+          />
+        );
+      case "Hires":
+        return (
+          <SmallStatPlot
+            emoji="✅"
+            title="Hires"
+            number={30}
+            description="Positions filled"
+          />
+        );
       default:
         console.warn(`Unknown plot type: ${plotType}`);
         return null;
@@ -28,13 +63,19 @@ const AnalyticsPage: React.FC = () => {
   };
 
   return (
-    <Box sx={{ display: "flex", width: "100vw", height: "100vh" }}>
-      <Box sx={{ width: "20%", backgroundColor: "#fff", padding: "20px" }}>
-        <Typography variant="h6">Swipework</Typography>
-      </Box>
+    <Box
+      sx={{
+        display: "flex",
+        width: "100vw",
+        minHeight: "100vh",
+        height: "fit-content",
+      }}
+    >
+      <Sidebar />
+
       <Box
         sx={{
-          width: "80%",
+          width: "100%",
           backgroundColor: "#dae5ff",
           padding: "20px",
           display: "flex",

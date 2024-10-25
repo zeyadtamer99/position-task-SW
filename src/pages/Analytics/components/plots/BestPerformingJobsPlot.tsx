@@ -9,19 +9,26 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { useTable } from "react-table";
+import { Column, useTable } from "react-table";
 import { mockPlotData } from "../../mockData/mockPlotData";
+// Define the data structure for the table rows
+interface JobData {
+  id: number;
+  name: string;
+  performance: number;
+  applied: number;
+}
 
 // Define the data structure for the table rows
 const BestPerformingJobsPlot: React.FC = () => {
   const data = React.useMemo(() => mockPlotData.BestPerformingJobs, []);
 
-  // Define the columns for the table
-  const columns = React.useMemo(
+  // Define the columns for the table with proper types
+  const columns = React.useMemo<Column<JobData>[]>(
     () => [
-      { Header: "Name", accessor: "name" },
-      { Header: "Performance (%)", accessor: "performance" },
-      { Header: "Applied", accessor: "applied" },
+      { Header: "Name", accessor: "name" as const },
+      { Header: "Performance (%)", accessor: "performance" as const },
+      { Header: "Applied", accessor: "applied" as const },
     ],
     []
   );

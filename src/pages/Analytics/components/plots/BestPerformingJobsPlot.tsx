@@ -48,7 +48,7 @@ const BestPerformingJobsPlot: React.FC = () => {
         padding: "16px",
         boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
         width: "100%", // Full width of the parent
-        height: "500px", // Consistent height
+        height: "100%", // Consistent height
       }}
     >
       <Typography variant="h6" sx={{ fontWeight: 600, marginBottom: "16px" }}>

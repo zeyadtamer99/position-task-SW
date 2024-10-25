@@ -4,18 +4,18 @@ import { Box, Typography } from "@mui/material";
 
 interface AddPlotButtonProps {
   onClick: () => void;
-  height?: string; // Optional height prop
+  height?: string | object;
 }
 
 const AddPlotButton: React.FC<AddPlotButtonProps> = ({
   onClick,
-  height = "500px",
+  height = "400px",
 }) => {
   return (
     <Box
       sx={{
         width: "70%",
-        height: height,
+        height: height, // Use the height prop directly
         backgroundColor: "#ffffff",
         borderRadius: "16px",
         display: "flex",

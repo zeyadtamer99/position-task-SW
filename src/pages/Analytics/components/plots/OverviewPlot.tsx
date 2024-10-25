@@ -7,15 +7,7 @@ import {
   MenuItem,
   SelectChangeEvent,
 } from "@mui/material";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-  CartesianGrid,
-} from "recharts";
+import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { mockPlotData } from "../../mockData/mockPlotData";
 
 // Define a type for the filter options
@@ -53,30 +45,43 @@ const OverviewPlot: React.FC = () => {
         backgroundColor: "#fff",
         borderRadius: "16px",
         padding: "24px",
+        paddingTop: "16px", // Smaller padding on top
         boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
         width: "100%", // Ensure it takes full width as defined in the parent container
-        height: "500px", // Set a consistent height for all plots
+        height: "100%", // Set a consistent height for all plots
+        display: "flex",
+        flexDirection: "column",
       }}
     >
-      <Typography variant="h6" sx={{ fontWeight: 600, marginBottom: "16px" }}>
-        Overview
-      </Typography>
-      <Select
-        value={filter}
-        onChange={handleFilterChange}
-        sx={{ marginBottom: "16px" }}
+      {/* Header Row with title and select */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "8px",
+        }}
       >
-        <MenuItem value="views">Views</MenuItem>
-        <MenuItem value="clicks">Clicks</MenuItem>
-      </Select>
-      <ResponsiveContainer width="100%" height={300}>
+        <Typography variant="h6" sx={{ fontWeight: 600 }}>
+          Overview
+        </Typography>
+        <Select
+          value={filter}
+          onChange={handleFilterChange}
+          size="small"
+          style={{ marginRight: "32px" }}
+        >
+          <MenuItem value="views">Views</MenuItem>
+          <MenuItem value="clicks">Clicks</MenuItem>
+        </Select>
+      </Box>
+      {/* Chart Container */}
+      <ResponsiveContainer width="100%" height="90%">
         <BarChart
           data={chartData}
           margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
         >
-          <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
-          <YAxis />
           <Tooltip />
           <Bar dataKey="value" fill="#5d47ff" radius={[5, 5, 0, 0]} />
         </BarChart>

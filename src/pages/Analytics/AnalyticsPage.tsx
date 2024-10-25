@@ -10,7 +10,7 @@ import BestPerformingJobsPlot from "./components/plots/BestPerformingJobsPlot";
 import Sidebar from "../../components/Sidebar";
 import { CloseOutlined } from "@ant-design/icons";
 import { Button } from "antd";
-import { getPlotHeight, getPlotWidth } from "./utils";
+import { getPlotWidth, getResponsiveHeight } from "./utils";
 
 const plotTypes = [
   "Overview",
@@ -82,7 +82,11 @@ const AnalyticsPage: React.FC = () => {
     const previousPlotType = index > 0 ? plots[index - 1] : null;
     const nextPlotType = index < plots.length - 1 ? plots[index + 1] : null;
 
-    const plotHeight = getPlotHeight(plotType, previousPlotType, nextPlotType);
+    const plotHeight = getResponsiveHeight(
+      plotType,
+      previousPlotType,
+      nextPlotType
+    );
     const plotWidth = getPlotWidth(plotType, previousPlotType, nextPlotType);
 
     return (
@@ -144,9 +148,9 @@ const AnalyticsPage: React.FC = () => {
                 onClick={() => setModalOpen(true)}
                 height={
                   plots.length > 0
-                    ? getPlotHeight(plots[plots.length - 1], null, null)
-                    : "500px"
-                } // Use the height of the last plot, or 500px if no plots exist
+                    ? getResponsiveHeight(plots[plots.length - 1], null, null)
+                    : { xs: "300px", sm: "400px", md: "500px" }
+                } // Use responsive height of the last plot, or default values if no plots exist
               />
             </Box>
           )}

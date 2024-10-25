@@ -1,10 +1,11 @@
 // src/pages/utils.tsx
 
-export const getPlotHeight = (
+// src/utils.tsx
+export const getResponsiveHeight = (
   plotType: string,
   previousPlotType: string | null,
   nextPlotType: string | null
-): string => {
+) => {
   const isPreviousTall =
     previousPlotType === "Overview" ||
     previousPlotType === "Best Performing Jobs";
@@ -17,18 +18,18 @@ export const getPlotHeight = (
     plotType === "Hires"
   ) {
     if (isPreviousTall && !nextPlotType) {
-      return "300px";
+      return { xs: "200px", sm: "250px", md: "300px" };
     } else if (isPreviousTall || isNextTall) {
-      return "500px";
+      return { xs: "350px", sm: "400px", md: "400px" };
     } else if (
       !isPreviousTall &&
       !isNextTall &&
       (!previousPlotType || !nextPlotType)
     ) {
-      return "300px";
+      return { xs: "200px", sm: "250px", md: "300px" };
     }
   }
-  return "500px";
+  return { xs: "350px", sm: "400px", md: "400px" };
 };
 
 export const getPlotWidth = (

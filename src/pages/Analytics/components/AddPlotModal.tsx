@@ -6,6 +6,7 @@ interface AddPlotModalProps {
   isOpen: boolean;
   onClose: () => void;
   onAddPlot: (plotType: string) => void;
+  existingPlots: string[]; // Pass the existing plots as a prop
 }
 
 const plotOptions = [
@@ -22,6 +23,7 @@ const AddPlotModal: React.FC<AddPlotModalProps> = ({
   isOpen,
   onClose,
   onAddPlot,
+  existingPlots,
 }) => {
   return (
     <Modal open={isOpen} onClose={onClose}>
@@ -32,7 +34,7 @@ const AddPlotModal: React.FC<AddPlotModalProps> = ({
           margin: "auto",
           marginTop: "10%",
           borderRadius: "16px",
-          padding: "32px", // Reduced padding to make it smaller
+          padding: "32px",
           boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
           textAlign: "center",
         }}
@@ -43,39 +45,72 @@ const AddPlotModal: React.FC<AddPlotModalProps> = ({
         <Box
           sx={{
             display: "grid",
-            gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" }, // Two columns on small screens and up
+            gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" },
             gap: "12px",
           }}
         >
-          {plotOptions.map((option) => (
-            <Button
-              key={option.name}
-              variant="outlined"
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                textTransform: "none",
-                borderRadius: "8px",
-                padding: "12px", // Smaller padding to reduce size
-                fontSize: "0.9rem", // Slightly smaller font for better responsiveness
-                minHeight: "90px",
-                "&:hover": {
-                  backgroundColor: "#f0f0f0",
-                },
-              }}
-              onClick={() => onAddPlot(option.name)}
-            >
-              <Typography
-                sx={{ fontSize: "1.8rem", marginBottom: "8px" }}
-                component="span"
+          {plotOptions.map((option) => {
+            const isAlreadyAdded = existingPlots.includes(option.name);
+
+            return (
+              <Box
+                key={option.name}
+                sx={{
+                  position: "relative",
+                  opacity: isAlreadyAdded ? 0.5 : 1, // Dim background if already added
+                  pointerEvents: isAlreadyAdded ? "none" : "auto", // Disable pointer events if already added
+                }}
               >
-                {option.emoji}
-              </Typography>
-              <Typography component="span">{option.name}</Typography>
-            </Button>
-          ))}
+                <Button
+                  variant="outlined"
+                  disabled={isAlreadyAdded} // Disable the button if already added
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    textTransform: "none",
+                    borderRadius: "8px",
+                    padding: "12px",
+                    fontSize: "0.9rem",
+                    width: "100%",
+                    height: "100%",
+                    "&:hover": {
+                      backgroundColor: "#f0f0f0",
+                    },
+                  }}
+                  onClick={() => onAddPlot(option.name)}
+                >
+                  <Typography
+                    sx={{ fontSize: "1.8rem", marginBottom: "8px" }}
+                    component="span"
+                  >
+                    {option.emoji}
+                  </Typography>
+                  <Typography component="span">{option.name}</Typography>
+                </Button>
+                {isAlreadyAdded && (
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      backgroundColor: "rgba(0, 0, 0, 0.5)", // Dim overlay
+                      color: "#fff",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      borderRadius: "8px",
+                    }}
+                  >
+                    Already Added
+                  </Box>
+                )}
+              </Box>
+            );
+          })}
         </Box>
       </Box>
     </Modal>

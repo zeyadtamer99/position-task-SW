@@ -18,8 +18,8 @@ const SavedJobsPlot: React.FC = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        width: "55%",
-        height: "50%",
+        width: "100%", // Full width of the parent
+        height: "500px", // Consistent height
       }}
     >
       <Typography variant="h6" sx={{ fontWeight: 600, marginBottom: "8px" }}>

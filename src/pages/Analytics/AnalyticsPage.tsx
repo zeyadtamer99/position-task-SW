@@ -1,6 +1,6 @@
 // src/pages/AnalyticsPage.tsx
 import React, { useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import NewVisitsPlot from "./components/NewVisitsPlot";
 import OverviewPlot from "./components/OverviewPlot";
 import SavedJobsPlot from "./components/SavedJobsPlot";
@@ -9,9 +9,20 @@ import AddPlotButton from "./components/AddPlotButton";
 import AddPlotModal from "./components/AddPlotModal";
 import BestPerformingJobsPlot from "./components/BestPerformingJobsPlot";
 import Sidebar from "../../components/Sidebar";
+import { CloseOutlined } from "@ant-design/icons";
+
+const plotTypes = [
+  "Overview",
+  "New Visits",
+  "Saved Jobs",
+  "Best Performing Jobs",
+  "Followers",
+  "Applies",
+  "Hires",
+];
 
 const AnalyticsPage: React.FC = () => {
-  const [plots, setPlots] = useState<string[]>(["Overview"]);
+  const [plots, setPlots] = useState<string[]>([]);
   const [isModalOpen, setModalOpen] = useState(false);
 
   const handleAddPlot = (plotType: string) => {
@@ -61,7 +72,9 @@ const AnalyticsPage: React.FC = () => {
         return null;
     }
   };
-
+  const handleRemovePlot = (plotType: string) => {
+    setPlots(plots.filter((plot) => plot !== plotType));
+  };
   return (
     <Box
       sx={{
@@ -94,44 +107,107 @@ const AnalyticsPage: React.FC = () => {
           }}
         >
           {plots.map((plotType, index) => {
-            // Determine the height of the current plot
+            // Determine the height of the current plot based on surrounding plots
             const previousPlotType = index > 0 ? plots[index - 1] : null;
-            const isAdjacentToTallPlot =
+            const nextPlotType =
+              index < plots.length - 1 ? plots[index + 1] : null;
+
+            const isPreviousTall =
               previousPlotType === "Overview" ||
               previousPlotType === "Best Performing Jobs";
+            const isNextTall =
+              nextPlotType === "Overview" ||
+              nextPlotType === "Best Performing Jobs";
 
-            const plotHeight = isAdjacentToTallPlot ? "500px" : "300px";
+            // Logic to determine the plot height
+            let plotHeight = "300px"; // Default to 300px
+
+            if (
+              plotType === "Followers" ||
+              plotType === "Applies" ||
+              plotType === "Hires"
+            ) {
+              if (isPreviousTall && index === 0) {
+                plotHeight = "300px";
+              } else if (isPreviousTall && index > 0) {
+                plotHeight = "500px";
+              } else if (isPreviousTall && isNextTall) {
+                plotHeight = "500px";
+              } else if (isNextTall && index === 0) {
+                plotHeight = "500px";
+              } else if (isNextTall && index > 0) {
+                plotHeight = "500px";
+              } else if (
+                !isPreviousTall &&
+                !isNextTall &&
+                (index === 0 || index === plots.length - 1)
+              ) {
+                plotHeight = "300px";
+              }
+            } else {
+              plotHeight = "500px"; // Tall plot default height
+            }
+
+            // Determine the width of the current plot
+            let plotWidth =
+              plotType === "Overview" || plotType === "Best Performing Jobs"
+                ? "65%"
+                : "25%";
+
+            // Check if "Best Performing Jobs" and "Overview" are next to each other
+            if (
+              (plotType === "Best Performing Jobs" &&
+                (previousPlotType === "Overview" ||
+                  nextPlotType === "Overview")) ||
+              (plotType === "Overview" &&
+                (previousPlotType === "Best Performing Jobs" ||
+                  nextPlotType === "Best Performing Jobs"))
+            ) {
+              plotWidth = plotType === "Best Performing Jobs" ? "35%" : "64%";
+            }
 
             return (
               <Box
                 key={index}
                 sx={{
-                  width:
-                    plotType === "Overview" ||
-                    plotType === "Best Performing Jobs"
-                      ? "65%"
-                      : "25%",
-                  height:
-                    plotType === "Followers" ||
-                    plotType === "Applies" ||
-                    plotType === "Hires"
-                      ? plotHeight
-                      : "500px",
+                  width: plotWidth,
+                  height: plotHeight,
                 }}
               >
+                <Box
+                  sx={{
+                    position: "relative", // Needed for positioning the delete button
+                  }}
+                >
+                  {/* X icon button */}
+                  <IconButton
+                    onClick={() => handleRemovePlot(plotType)}
+                    sx={{
+                      position: "absolute",
+                      top: "8px",
+                      right: "8px",
+                      zIndex: 1,
+                    }}
+                  >
+                    <CloseOutlined />
+                  </IconButton>
+                </Box>
                 {renderPlot(plotType)}
               </Box>
             );
           })}
-          <Box sx={{ width: "30%" }}>
-            <AddPlotButton onClick={() => setModalOpen(true)} />
-          </Box>
+          {plots.length < plotTypes.length && (
+            <Box sx={{ width: "30%" }}>
+              <AddPlotButton onClick={() => setModalOpen(true)} />
+            </Box>
+          )}
         </Box>
 
         <AddPlotModal
           isOpen={isModalOpen}
           onClose={() => setModalOpen(false)}
           onAddPlot={handleAddPlot}
+          existingPlots={plots} // Pass the current list of plots
         />
       </Box>
     </Box>

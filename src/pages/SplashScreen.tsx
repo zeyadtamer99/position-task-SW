@@ -7,8 +7,8 @@ import {
   formContainerStyle,
   reusableButtonStyle,
 } from "../assets/global-styles";
-import { Typography } from "antd";
 import { RightOutlined } from "@ant-design/icons";
+import AuthHeader from "./Registeration/components/AuthHeader";
 
 const images = [
   "/src/assets/images/2.png",
@@ -55,27 +55,8 @@ const SplashScreen: React.FC = () => {
         px: { xs: 2, md: 4 },
       }}
     >
-      {/* Logo */}
-      <img
-        src="/src/assets/images/Logo-white.png"
-        alt="Logo"
-        style={{
-          width: "60vw",
-          maxWidth: "500px",
-          marginBottom: "16px",
-        }}
-      />
-      <Typography
-        style={{
-          fontSize: "0.8vw",
-          color: "#ffffff",
-          marginBottom: "32px",
-          textAlign: "center",
-          fontWeight: 500,
-        }}
-      >
-        SWIPE yourself the job you really want
-      </Typography>
+      <AuthHeader subtitle="SWIPE yourself the job you really want" />{" "}
+      {/* Pass subtitle */}
       {/* Swipeable Image Viewer */}
       <Box sx={imageContainerStyle}>
         <SwipeableViews

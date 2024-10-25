@@ -1,7 +1,11 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 
-const SignUpHeader: React.FC = () => {
+interface AuthHeaderProps {
+  subtitle: string; // New prop for subtitle text
+}
+
+const AuthHeader: React.FC<AuthHeaderProps> = ({ subtitle }) => {
   return (
     <Box
       sx={{
@@ -28,15 +32,15 @@ const SignUpHeader: React.FC = () => {
         style={{
           fontSize: "0.8vw",
           color: "#ffffff",
-          marginBottom: "32px",
+          marginBottom: "8px",
           textAlign: "center",
           fontWeight: 500,
         }}
       >
-        Create an account to get started
+        {subtitle} {/* Display subtitle prop */}
       </Typography>
     </Box>
   );
 };
 
-export default SignUpHeader;
+export default AuthHeader;

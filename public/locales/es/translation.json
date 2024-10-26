@@ -1,0 +1,122 @@
+{
+    "general": {
+      "welcome": "¡Bienvenido a la nueva aplicación!",
+      "login": "Iniciar Sesión",
+      "signup": "Registrarse"
+    },
+    "modal": {
+      "choosePlotType": "Elige un tipo de gráfico para agregar",
+      "alreadyAdded": "Ya Agregado",
+      "addNewPlot": "+ Agregar nuevo Gráfico"
+    },
+    "titles": {
+      "savedJobs": "Trabajos Guardados",
+      "newVisits": "Nuevas Visitas",
+      "overview": "Resumen",
+      "bestPerformingJobs": "Trabajos con Mejor Rendimiento",
+      "followers": "Seguidores",
+      "hires": "Contrataciones",
+      "applies": "Aplicaciones",
+      "Followers": "Seguidores",
+      "Hires": "Contrataciones",
+      "Applies": "Aplicaciones"
+    },
+    "subtitles": {
+      "savedJobs": "Guardados totales según el periodo seleccionado",
+      "newVisits": "Visitas a tus trabajos según el periodo seleccionado",
+      "FollowersPeriod": "Seguidores durante el periodo seleccionado",
+      "HiresPeriod": "Contrataciones durante el periodo seleccionado",
+      "AppliesPeriod": "Aplicaciones durante el periodo seleccionado"
+    },
+    "tableHeaders": {
+      "name": "Nombre",
+      "performance": "Desempeño",
+      "applied": "Aplicado"
+    },
+    "timeRanges": {
+      "currentMonth": "Mes Actual",
+      "previousMonth": "Mes Anterior",
+      "last3Months": "Últimos 3 Meses"
+    },
+    "dateRangePicker": {
+      "selectMonthRange": "Seleccionar Rango de Meses",
+      "warningMessage": "Si seleccionas 6 o más meses, no se podrá calcular la comparación."
+    },
+    "actions": {
+      "cancel": "Cancelar",
+      "confirm": "Confirmar"
+    },
+    "addPlot": {
+      "title": "Veamos los datos",
+      "choosePlotType": "Elige un tipo de gráfico para agregar",
+      "alreadyAdded": "Ya Agregado",
+      "addNewPlot": "+ Agregar nuevo Gráfico"
+    },
+    "filter": {
+      "views": "Vistas",
+      "clicks": "Clics"
+    },
+    "months": {
+      "jan": "Ene",
+      "feb": "Feb",
+      "mar": "Mar",
+      "apr": "Abr",
+      "may": "May",
+      "jun": "Jun",
+      "jul": "Jul",
+      "aug": "Ago",
+      "sep": "Sep",
+      "oct": "Oct",
+      "nov": "Nov",
+      "dec": "Dic"
+    },
+    "bestPerformingJobs": {
+      "name": "Nombre",
+      "performance": "Desempeño",
+      "applied": "Aplicado"
+    },
+    "home": {
+      "subtitle": "Encuentra el trabajo que realmente quieres",
+      "buttons": {
+        "newUser": "Soy nuevo en Swipework",
+        "existingUser": "Ya tengo una cuenta"
+      }
+    },
+    "signup": {
+      "subtitle": "Crea una cuenta para comenzar",
+      "existingUser": {
+        "text": "¿Ya tienes una cuenta?",
+        "link": "Volver a Iniciar Sesión"
+      }
+    },
+    "login": {
+      "subtitle": "¡Bienvenido de nuevo! Inicia sesión en tu cuenta.",
+      "newUser": {
+        "text": "¿No tienes una cuenta?",
+        "link": "Regístrate"
+      }
+    },
+    "social": {
+      "signUpWithFacebook": "Registrarse con Facebook",
+      "signUpWithGoogle": "Registrarse con Google",
+      "signUpWithGitHub": "Registrarse con GitHub"
+    },
+    "form": {
+      "fullName": "Nombre Completo",
+      "emailAddress": "Correo Electrónico",
+      "password": "Contraseña",
+      "signUp": "Registrarse",
+      "login": "Iniciar Sesión"
+    },
+    "analytics": {
+      "title": "Veamos los datos",
+      "addPlot": "Agregar un nuevo gráfico"
+    },
+    "signOutDialog": {
+      "title": "¿Estás seguro de que deseas cerrar sesión?",
+      "message": "Necesitarás iniciar sesión nuevamente para acceder a tu cuenta.",
+      "cancel": "Cancelar",
+      "confirm": "Sí, Cerrar Sesión"
+    }
+  }
+  

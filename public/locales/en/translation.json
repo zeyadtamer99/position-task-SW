@@ -14,6 +14,9 @@
     "newVisits": "New Visits",
     "overview": "Overview",
     "bestPerformingJobs": "Best Performing Jobs",
+    "followers": "Followers",
+    "hires": "Hires",
+    "applies": "Applies",
     "Followers": "Followers",
     "Hires": "Hires",
     "Applies": "Applies"
@@ -112,5 +115,11 @@
     "analytics": {
       "title": "Let’s see the data",
       "addPlot": "Add a new plot"
+    },
+    "signOutDialog": {
+      "title": "Are you sure you want to sign out?",
+      "message": "You will need to log in again to access your account.",
+      "cancel": "Cancel",
+      "confirm": "Yes, Sign Out"
     }
   }  

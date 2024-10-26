@@ -130,7 +130,6 @@ const AnalyticsPage: React.FC = () => {
         return null;
     }
   };
-
   const renderPlot = (plotType: string, index: number) => {
     const previousPlotType = index > 0 ? plots[index - 1] : null;
     const nextPlotType = index < plots.length - 1 ? plots[index + 1] : null;

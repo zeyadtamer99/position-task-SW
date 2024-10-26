@@ -14,6 +14,9 @@
       "newVisits": "Nieuwe bezoeken",
       "overview": "Overzicht",
       "bestPerformingJobs": "Best presterende vacatures",
+      "followers": "Volgers",
+      "hires": "Aanwervingen",
+      "applies": "Sollicitaties",
       "Followers": "Volgers",
       "Hires": "Aanwervingen",
       "Applies": "Sollicitaties"
@@ -108,6 +111,12 @@
     "analytics": {
       "title": "Laten we de gegevens bekijken",
       "addPlot": "Nieuwe grafiek toevoegen"
+    },
+    "signOutDialog": {
+      "title": "Weet je zeker dat je wilt uitloggen?",
+      "message": "Je moet opnieuw inloggen om toegang te krijgen tot je account.",
+      "cancel": "Annuleren",
+      "confirm": "Ja, uitloggen"
     }
   }
   

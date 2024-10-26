@@ -1,4 +1,3 @@
-// src/components/AddPlotModal.tsx
 import React from "react";
 import { Box, Modal, Typography, Button } from "@mui/material";
 import { useTranslation } from "react-i18next";

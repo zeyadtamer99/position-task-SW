@@ -39,13 +39,14 @@ const SmallStatPlot: React.FC<SmallStatPlotProps> = ({
     | undefined
   >(undefined);
 
-  const metricKeyMap: Record<string, keyof Metrics> = {
-    Followers: "followers",
-    Applies: "applies",
-    Hires: "hires",
-    Views: "views", // Adjust if other titles map to "views" or other fields
-  };
   const { t } = useTranslation();
+
+  const metricKeyMap: Record<string, keyof Metrics> = {
+    [t("titles.followers")]: "followers",
+    [t("titles.applies")]: "applies",
+    [t("titles.hires")]: "hires",
+    [t("titles.views")]: "views",
+  };
 
   useEffect(() => {
     const metricKey = metricKeyMap[title];

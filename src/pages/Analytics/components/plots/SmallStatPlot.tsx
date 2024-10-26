@@ -1,18 +1,17 @@
-// src/components/SmallStatPlot.tsx
 import React from "react";
 import { Box, Typography } from "@mui/material";
 
 interface SmallStatPlotProps {
   emoji: string;
   title: string;
-  number: number;
+  count: number;
   description: string;
 }
 
 const SmallStatPlot: React.FC<SmallStatPlotProps> = ({
   emoji,
   title,
-  number,
+  count,
   description,
 }) => {
   return (
@@ -46,7 +45,7 @@ const SmallStatPlot: React.FC<SmallStatPlotProps> = ({
           {title}
         </Typography>
         <Typography variant="h4" sx={{ fontWeight: 700 }}>
-          {number}
+          {count}
         </Typography>
         <Typography variant="body2">{description}</Typography>
       </Box>

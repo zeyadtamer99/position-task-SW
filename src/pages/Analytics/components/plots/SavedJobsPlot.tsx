@@ -1,12 +1,13 @@
-// src/components/SavedJobsPlot.tsx
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
-import { mockPlotData } from "../../mockData/mockPlotData";
 
-const SavedJobsPlot: React.FC = () => {
-  const { percentage } = mockPlotData.SavedJobs;
+interface SavedJobsPlotProps {
+  data: { percentage: number } | null;
+}
+
+const SavedJobsPlot: React.FC<SavedJobsPlotProps> = ({ data }) => {
+  if (!data) return <Typography>Loading...</Typography>;
 
   return (
     <Box
@@ -35,8 +36,8 @@ const SavedJobsPlot: React.FC = () => {
       <Box sx={{ width: "70%" }}>
         {/* Adjust width for better visual appeal */}
         <CircularProgressbar
-          value={percentage}
-          text={`${percentage}%`}
+          value={data.percentage}
+          text={`${data.percentage}%`}
           styles={buildStyles({
             textColor: "#4a4a4a", // Darker color for text
             pathColor: "#7b61ff", // Gradient-like color to match the design

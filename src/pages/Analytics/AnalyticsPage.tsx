@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import NewVisitsPlot from "./components/plots/NewVisitsPlot";
 import OverviewPlot from "./components/plots/OverviewPlot";
@@ -11,6 +11,19 @@ import Sidebar from "../../components/Sidebar";
 import { CloseOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { getPlotWidth, getResponsiveHeight } from "./utils";
+import { fetchJobsFromFirebase } from "../../utils/firebaseFetch";
+import {
+  BestPerformingJobData,
+  NewVisitsData,
+  OverviewData,
+  processBestPerformingJobsData,
+  processNewVisitsData,
+  processOverviewData,
+  processSavedJobsData,
+  processSmallStatData,
+  SavedJobsData,
+  SmallStatData,
+} from "../../utils/dataProcessor";
 
 const plotTypes = [
   "Overview",
@@ -26,7 +39,35 @@ const AnalyticsPage: React.FC = () => {
   const [plots, setPlots] = useState<string[]>(["Overview"]);
   const [isModalOpen, setModalOpen] = useState(false);
   const [hoveredPlotIndex, setHoveredPlotIndex] = useState<number | null>(null);
+  // Data states for each plot
+  const [overviewData, setOverviewData] = useState<OverviewData | null>(null);
+  const [newVisitsData, setNewVisitsData] = useState<NewVisitsData | null>(
+    null
+  );
+  const [savedJobsData, setSavedJobsData] = useState<SavedJobsData | null>(
+    null
+  );
+  const [smallStatData, setSmallStatData] = useState<SmallStatData[]>([]);
+  const [bestJobData, setBestPerformingJobsData] = useState<
+    BestPerformingJobData[]
+  >([]);
 
+  useEffect(() => {
+    const loadData = async () => {
+      console.log("🚀 Fetching jobs data from Firestore...");
+      const fetchedJobs = await fetchJobsFromFirebase();
+      if (fetchedJobs) {
+        // Process and set data for each plot
+        setOverviewData(processOverviewData(fetchedJobs));
+        setNewVisitsData(processNewVisitsData(fetchedJobs));
+        setSavedJobsData(processSavedJobsData(fetchedJobs));
+        setSmallStatData(processSmallStatData(fetchedJobs));
+        setBestPerformingJobsData(processBestPerformingJobsData(fetchedJobs));
+      }
+    };
+
+    loadData();
+  }, []);
   const handleAddPlot = (plotType: string) => {
     setPlots([...plots, plotType]);
     setModalOpen(false);
@@ -39,40 +80,33 @@ const AnalyticsPage: React.FC = () => {
   const renderPlotComponent = (plotType: string) => {
     switch (plotType) {
       case "Overview":
-        return <OverviewPlot />;
+        return <OverviewPlot data={overviewData} />;
       case "New Visits":
-        return <NewVisitsPlot />;
+        return <NewVisitsPlot data={newVisitsData} />;
       case "Saved Jobs":
-        return <SavedJobsPlot />;
+        return <SavedJobsPlot data={savedJobsData} />;
       case "Best Performing Jobs":
-        return <BestPerformingJobsPlot />;
+        return <BestPerformingJobsPlot data={bestJobData} />;
+
+      // Render SmallStatPlots for Followers, Applies, and Hires
       case "Followers":
-        return (
-          <SmallStatPlot
-            emoji="👤"
-            title="Followers"
-            number={2500}
-            description="New followers this month"
-          />
-        );
       case "Applies":
-        return (
-          <SmallStatPlot
-            emoji="✉️"
-            title="Applies"
-            number={123}
-            description="Job applications sent"
-          />
-        );
-      case "Hires":
-        return (
-          <SmallStatPlot
-            emoji="✅"
-            title="Hires"
-            number={30}
-            description="Positions filled"
-          />
-        );
+      case "Hires": {
+        // Find the corresponding data for the current plotType
+        const statData = smallStatData.find((data) => data.title === plotType);
+        if (statData) {
+          return (
+            <SmallStatPlot
+              emoji={statData.emoji}
+              title={statData.title}
+              count={statData.number} // Pass the 'number' as count
+              description={statData.description}
+            />
+          );
+        }
+        return null; // Return null if data is not found for the plotType
+      }
+
       default:
         console.warn(`Unknown plot type: ${plotType}`);
         return null;

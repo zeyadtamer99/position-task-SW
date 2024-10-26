@@ -9,36 +9,16 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { Column, useTable } from "react-table";
-import { mockPlotData } from "../../mockData/mockPlotData";
-// Define the data structure for the table rows
-interface JobData {
-  id: number;
-  name: string;
-  performance: number;
-  applied: number;
+import { BestPerformingJobData } from "../../../../utils/dataProcessor";
+
+interface BestPerformingJobsPlotProps {
+  data: BestPerformingJobData[] | null;
 }
 
-// Define the data structure for the table rows
-const BestPerformingJobsPlot: React.FC = () => {
-  const data = React.useMemo(() => mockPlotData.BestPerformingJobs, []);
-
-  // Define the columns for the table with proper types
-  const columns = React.useMemo<Column<JobData>[]>(
-    () => [
-      { Header: "Name", accessor: "name" as const },
-      { Header: "Performance (%)", accessor: "performance" as const },
-      { Header: "Applied", accessor: "applied" as const },
-    ],
-    []
-  );
-
-  // Use the useTable hook to create the table instance
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({
-      columns,
-      data,
-    });
+const BestPerformingJobsPlot: React.FC<BestPerformingJobsPlotProps> = ({
+  data,
+}) => {
+  if (!data) return null;
 
   return (
     <Box
@@ -54,31 +34,22 @@ const BestPerformingJobsPlot: React.FC = () => {
       <Typography variant="h6" sx={{ fontWeight: 600, marginBottom: "16px" }}>
         Best Performing Jobs
       </Typography>
-      <Table {...getTableProps()} sx={{ width: "100%" }}>
+      <Table sx={{ width: "100%" }}>
         <TableHead>
-          {headerGroups.map((headerGroup) => (
-            <TableRow {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <TableCell {...column.getHeaderProps()}>
-                  {column.render("Header")}
-                </TableCell>
-              ))}
+          <TableRow>
+            <TableCell>Name</TableCell>
+            <TableCell>Performance</TableCell>
+            <TableCell>Applied</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {data.map((job) => (
+            <TableRow key={job.name}>
+              <TableCell>{job.name}</TableCell>
+              <TableCell>{job.performance}%</TableCell>
+              <TableCell>{job.applied}</TableCell>
             </TableRow>
           ))}
-        </TableHead>
-        <TableBody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <TableRow {...row.getRowProps()}>
-                {row.cells.map((cell) => (
-                  <TableCell {...cell.getCellProps()}>
-                    {cell.render("Cell")}
-                  </TableCell>
-                ))}
-              </TableRow>
-            );
-          })}
         </TableBody>
       </Table>
     </Box>

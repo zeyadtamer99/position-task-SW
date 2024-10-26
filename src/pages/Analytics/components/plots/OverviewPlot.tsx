@@ -8,20 +8,21 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer } from "recharts";
-import { mockPlotData } from "../../mockData/mockPlotData";
+import { OverviewData } from "../../../../utils/dataProcessor";
 
-// Define a type for the filter options
 type FilterType = "views" | "clicks";
+interface OverviewPlotProps {
+  data: OverviewData | null;
+}
 
-const OverviewPlot: React.FC = () => {
+const OverviewPlot: React.FC<OverviewPlotProps> = ({ data }) => {
   const [filter, setFilter] = useState<FilterType>("views");
 
+  if (!data) return null;
   const handleFilterChange = (event: SelectChangeEvent<"views" | "clicks">) => {
     setFilter(event.target.value as FilterType);
   };
-
-  // Prepare data for the selected filter
-  const chartData = mockPlotData.Overview[filter].map((value, index) => ({
+  const chartData = data.views.map((value, index) => ({
     name: [
       "Jan",
       "Feb",
@@ -36,7 +37,8 @@ const OverviewPlot: React.FC = () => {
       "Nov",
       "Dec",
     ][index],
-    value,
+    views: value,
+    clicks: data.clicks[index],
   }));
 
   return (

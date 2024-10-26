@@ -113,26 +113,47 @@ const AnalyticsPage: React.FC = () => {
     }
   };
 
+  // Inside AnalyticsPage component
   const renderPlot = (plotType: string, index: number) => {
     const previousPlotType = index > 0 ? plots[index - 1] : null;
     const nextPlotType = index < plots.length - 1 ? plots[index + 1] : null;
 
-    const plotHeight = getResponsiveHeight(
-      plotType,
-      previousPlotType,
-      nextPlotType
-    );
     const plotWidth = getPlotWidth(plotType, previousPlotType, nextPlotType);
+    const isSideBySide = plotWidth === "50%";
+
+    // Check if the current plot and the following two plots are SmallStatPlots in the order expected
+    const isSmallStatRow =
+      plotType === "Followers" &&
+      plots[index + 1] === "Applies" &&
+      plots[index + 2] === "Hires";
 
     return (
       <Box
         key={index}
-        sx={{ width: plotWidth, height: plotHeight }}
-        onMouseEnter={() => setHoveredPlotIndex(index)} // Set hovered index on mouse enter
-        onMouseLeave={() => setHoveredPlotIndex(null)} // Clear hovered index on mouse leave
+        sx={{
+          width:
+            isSmallStatRow ||
+            (plotType === "Applies" && previousPlotType === "Followers") ||
+            (plotType === "Hires" && previousPlotType === "Applies")
+              ? { xs: "20%", md: "32%", lg: "32.2%", xl: "29.4%" }
+              : { xs: "100%", md: "49%", lg: plotWidth },
+          height:
+            isSmallStatRow ||
+            (plotType === "Applies" && previousPlotType === "Followers") ||
+            (plotType === "Hires" && previousPlotType === "Applies")
+              ? { xs: "200px", md: "250px" } // Apply height when in a SmallStat row
+              : isSideBySide
+              ? { xs: "250px", md: "400px" }
+              : { xs: "350px", md: "500px" },
+          display: { xs: isSideBySide ? "flex" : "block", md: "block" },
+          flexDirection: { xs: "row", md: "column" },
+          gap: { xs: "8px", md: "0" },
+        }}
+        onMouseEnter={() => setHoveredPlotIndex(index)}
+        onMouseLeave={() => setHoveredPlotIndex(null)}
       >
         <Box sx={{ position: "relative" }}>
-          {hoveredPlotIndex === index && ( // Show the button only if this plot is hovered
+          {hoveredPlotIndex === index && (
             <Button
               type="text"
               onClick={() => handleRemovePlot(plotType)}

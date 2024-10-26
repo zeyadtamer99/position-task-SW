@@ -37,18 +37,17 @@ export const getPlotWidth = (
   previousPlotType: string | null,
   nextPlotType: string | null
 ): string => {
-  if (
-    (plotType === "Best Performing Jobs" &&
-      (previousPlotType === "Overview" || nextPlotType === "Overview")) ||
-    (plotType === "Overview" &&
-      (previousPlotType === "Best Performing Jobs" ||
-        nextPlotType === "Best Performing Jobs"))
-  ) {
-    return plotType === "Best Performing Jobs" ? "35%" : "64%";
+  const isSideBySide =
+    (plotType === "Best Performing Jobs" && previousPlotType === "Overview") ||
+    (plotType === "Overview" && nextPlotType === "Best Performing Jobs");
+
+  if (isSideBySide) {
+    return "49%"; // Single width for use with responsive styling directly in the component
   }
+
   return plotType === "Overview" || plotType === "Best Performing Jobs"
-    ? "65%"
-    : "25%";
+    ? "60%"
+    : "29%";
 };
 
 export const formatDate = (date: Date) => {

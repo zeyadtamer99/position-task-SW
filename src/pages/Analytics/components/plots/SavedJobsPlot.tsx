@@ -115,7 +115,13 @@ const SavedJobsPlot: React.FC<SavedJobsPlotProps> = ({ data }) => {
         </Select>
       </Box>
 
-      <Box sx={{ width: { xs: "80%", sm: "60%" } }}>
+      <Box
+        sx={{
+          width: { xs: "80%", sm: "60%" },
+          height: "100%",
+          alignContent: "center",
+        }}
+      >
         {/* Circular Progress Bar with rounded edges */}
         <CircularProgressbarWithChildren
           value={isNaN(percentage) ? 0 : percentage}

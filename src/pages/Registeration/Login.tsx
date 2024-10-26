@@ -168,7 +168,9 @@ const Login: React.FC = () => {
         >
           <LoginForm onSubmit={handleFormLogin} />
           <SocialButtons onSocialSignUp={handleSocialLogin} mode="login" />
-          <Typography style={{ marginTop: "16px", fontSize: "1.1rem" }}>
+          <Typography
+            style={{ marginTop: "16px", fontSize: "1.1rem", color: "white" }}
+          >
             {t("login.newUser.text")}{" "}
             <strong
               style={{
@@ -183,16 +185,14 @@ const Login: React.FC = () => {
           </Typography>
 
           <Button
-            variant="text"
+            variant="solid"
             color="primary"
             onClick={openForgotPasswordModal}
             style={{
-              backgroundColor: "transparent",
-              textDecoration: "underline",
-              color: "#5d47ff",
-              fontWeight: "bold",
+              marginTop: "12px",
+              color: "#ffffff",
               padding: "8px 16px",
-              borderRadius: "20px",
+              borderRadius: "12px",
               transition: "background-color 0.3s, box-shadow 0.3s",
               boxShadow: "0px 2px 8px rgba(93, 71, 255, 0.2)",
             }}

@@ -7,8 +7,12 @@ import SignUp from "./pages/Registeration/SignUp";
 import SplashScreen from "./pages/SplashScreen";
 import AnalyticsPage from "./pages/Analytics/AnalyticsPage";
 import "./utils/i18n";
+import ProtectedRoute from "./utils/ProtectedRoute";
+import { useAuth } from "./utils/useAuth";
 
 function App() {
+  const isAuthenticated = useAuth(); // Check authentication status
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -17,7 +21,15 @@ function App() {
           <Route path="/" element={<SplashScreen />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/analytics" element={<AnalyticsPage />} />
+          <Route
+            path="/analytics"
+            element={
+              <ProtectedRoute
+                isAuthenticated={isAuthenticated}
+                element={<AnalyticsPage />}
+              />
+            }
+          />
         </Routes>
       </Router>
     </ThemeProvider>

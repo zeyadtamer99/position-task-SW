@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Box, Button } from "@mui/material";
 import { reusableButtonStyle } from "../../../assets/global-styles";
 import { Input } from "antd";
+import { useTranslation } from "react-i18next";
 
 interface SignUpFormProps {
   onSubmit: (fullName: string, email: string, password: string) => void;
@@ -11,6 +12,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSubmit }) => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { t } = useTranslation();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -27,7 +29,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSubmit }) => {
       onSubmit={handleSubmit}
     >
       <Input
-        placeholder="Full Name"
+        placeholder={t("form.fullName")}
         type="text"
         value={fullName}
         onChange={(e) => setFullName(e.target.value)}
@@ -38,7 +40,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSubmit }) => {
         }}
       />
       <Input
-        placeholder="Email Address"
+        placeholder={t("form.emailAddress")}
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
@@ -49,7 +51,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSubmit }) => {
         }}
       />
       <Input.Password
-        placeholder="Password"
+        placeholder={t("form.password")}
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         style={{
@@ -71,7 +73,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSubmit }) => {
         fullWidth
         type="submit"
       >
-        Sign Up
+        {t("form.signUp")}
       </Button>
     </Box>
   );

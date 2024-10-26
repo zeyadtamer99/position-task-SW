@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { OverviewData } from "../../../../utils/dataProcessor";
+import { useTranslation } from "react-i18next";
 
 type FilterType = "views" | "clicks";
 interface OverviewPlotProps {
@@ -17,6 +18,7 @@ interface OverviewPlotProps {
 
 const OverviewPlot: React.FC<OverviewPlotProps> = ({ data }) => {
   const [filter, setFilter] = useState<FilterType>("views");
+  const { t } = useTranslation();
 
   // Return null if no data is passed in
   if (!data) return null;
@@ -28,20 +30,24 @@ const OverviewPlot: React.FC<OverviewPlotProps> = ({ data }) => {
 
   // Prepare chart data to include both views and clicks for each month
   const chartData = data.views.map((viewValue, index) => ({
-    name: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ][index],
+    name: t(
+      `months.${
+        [
+          "jan",
+          "feb",
+          "mar",
+          "apr",
+          "may",
+          "jun",
+          "jul",
+          "aug",
+          "sep",
+          "oct",
+          "nov",
+          "dec",
+        ][index]
+      }`
+    ),
     views: viewValue,
     clicks: data.clicks[index],
   }));
@@ -70,7 +76,7 @@ const OverviewPlot: React.FC<OverviewPlotProps> = ({ data }) => {
         }}
       >
         <Typography variant="h6" sx={{ fontWeight: 600 }}>
-          Overview
+          {t("titles.overview")}
         </Typography>
         <Select
           value={filter}
@@ -78,8 +84,8 @@ const OverviewPlot: React.FC<OverviewPlotProps> = ({ data }) => {
           size="small"
           style={{ marginRight: "32px" }}
         >
-          <MenuItem value="views">Views</MenuItem>
-          <MenuItem value="clicks">Clicks</MenuItem>
+          <MenuItem value="views">{t("filter.views")}</MenuItem>
+          <MenuItem value="clicks">{t("filter.clicks")}</MenuItem>
         </Select>
       </Box>
 

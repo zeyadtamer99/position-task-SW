@@ -238,7 +238,8 @@ export interface SmallStatData {
 
 export const processSmallStatData = (
   jobs: Job[],
-  selectedMonths?: { start: number; end?: number } // Optional month or range
+  selectedMonths?: { start: number; end?: number },
+  descriptions?: Record<string, string> // Add optional descriptions parameter
 ): SmallStatData[] => {
   const monthIndexMap: Record<string, number> = {
     January: 0,
@@ -303,7 +304,7 @@ export const processSmallStatData = (
     title,
     emoji,
     number: metric.current,
-    description: `${title} during selected period`,
+    description: descriptions ? descriptions[title] : `during selected period`, // Use provided description if available
     changePercentage:
       metric.previous > 0
         ? Math.round(

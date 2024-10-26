@@ -10,7 +10,7 @@ import BestPerformingJobsPlot from "./components/plots/BestPerformingJobsPlot";
 import Sidebar from "../../components/Sidebar";
 import { CloseOutlined } from "@ant-design/icons";
 import { Button } from "antd";
-import { getPlotWidth, getResponsiveHeight } from "./utils";
+import { getPlotWidth } from "./utils";
 import { fetchJobsFromFirebase } from "../../utils/firebaseFetch";
 import {
   BestPerformingJobData,
@@ -25,6 +25,7 @@ import {
   SmallStatData,
 } from "../../utils/dataProcessor";
 import { Job } from "../../models/Job";
+import { useTranslation } from "react-i18next";
 
 const plotTypes = [
   "Overview",
@@ -52,6 +53,12 @@ const AnalyticsPage: React.FC = () => {
   const [bestJobData, setBestPerformingJobsData] = useState<
     BestPerformingJobData[]
   >([]);
+  const { t } = useTranslation();
+  const translatedDescriptions = {
+    Followers: t("subtitles.FollowersPeriod"),
+    Applies: t("subtitles.AppliesPeriod"),
+    Hires: t("subtitles.HiresPeriod"),
+  };
 
   useEffect(() => {
     const loadData = async () => {
@@ -62,7 +69,9 @@ const AnalyticsPage: React.FC = () => {
         setOverviewData(processOverviewData(fetchedJobs));
         setNewVisitsData(processNewVisitsData(fetchedJobs));
         setSavedJobsData(processSavedJobsData(fetchedJobs));
-        setSmallStatData(processSmallStatData(fetchedJobs));
+        setSmallStatData(
+          processSmallStatData(jobs, undefined, translatedDescriptions)
+        );
         setBestPerformingJobsData(processBestPerformingJobsData(fetchedJobs));
       }
     };
@@ -79,11 +88,12 @@ const AnalyticsPage: React.FC = () => {
     setPlots(plots.filter((plot) => plot !== plotType));
   };
 
-  const handleMonthRangeChange = (
-    plotType: string,
-    range: { start: number; end?: number }
-  ) => {
-    const updatedData = processSmallStatData(jobs, range);
+  const handleMonthRangeChange = (range: { start: number; end?: number }) => {
+    const updatedData = processSmallStatData(
+      jobs,
+      range,
+      translatedDescriptions
+    );
     setSmallStatData(updatedData);
   };
 
@@ -109,9 +119,7 @@ const AnalyticsPage: React.FC = () => {
               jobs={jobs}
               description={statData.description}
               changePercentage={statData.changePercentage}
-              onMonthRangeChange={(range) =>
-                handleMonthRangeChange(plotType, range)
-              }
+              onMonthRangeChange={(range) => handleMonthRangeChange(range)}
             />
           );
         }
@@ -170,8 +178,7 @@ const AnalyticsPage: React.FC = () => {
       sx={{
         display: "flex",
         width: "100vw",
-        minHeight: "100vh",
-        height: "fit-content",
+        height: "100vh",
       }}
     >
       <Sidebar />
@@ -182,10 +189,12 @@ const AnalyticsPage: React.FC = () => {
           padding: "20px",
           display: "flex",
           flexDirection: "column",
+          overflowY: "auto", // Allows inner scrolling within 100vh
+          flexGrow: 1,
         }}
       >
         <Typography variant="h5" sx={{ fontWeight: 600, marginBottom: "16px" }}>
-          Let’s see the data
+          {t("analytics.title")}
         </Typography>
         <Box
           sx={{
@@ -197,14 +206,22 @@ const AnalyticsPage: React.FC = () => {
         >
           {plots.map((plotType, index) => renderPlot(plotType, index))}
           {plots.length < plotTypes.length && (
-            <Box sx={{ width: "30%" }}>
+            <Box
+              sx={{
+                width: {
+                  sm: "75%",
+                  md: "45%",
+                  lg: "35%",
+                },
+              }}
+            >
               <AddPlotButton
                 onClick={() => setModalOpen(true)}
-                height={
-                  plots.length > 0
-                    ? getResponsiveHeight(plots[plots.length - 1], null, null)
-                    : { xs: "300px", sm: "400px", md: "500px" }
-                }
+                height={{
+                  xs: "300px",
+                  sm: "400px",
+                  md: "500px",
+                }}
               />
             </Box>
           )}

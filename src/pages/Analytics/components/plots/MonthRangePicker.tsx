@@ -12,6 +12,7 @@ import {
 import { DatePicker, Popover } from "antd";
 import { ExclamationCircleOutlined, CalendarOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
+import { useTranslation } from "react-i18next";
 
 const { RangePicker } = DatePicker;
 
@@ -31,6 +32,7 @@ const MonthRangePicker: React.FC<MonthRangePickerProps> = ({
     null,
   ]);
   const [showWarning, setShowWarning] = useState(false);
+  const { t } = useTranslation();
 
   const handleConfirm = () => {
     if (range[0]) {
@@ -61,7 +63,7 @@ const MonthRangePicker: React.FC<MonthRangePickerProps> = ({
         sx={{ display: "flex", alignItems: "center", gap: 1, zIndex: "88" }}
       >
         <CalendarOutlined style={{ fontSize: "1.5rem", color: "#1890ff" }} />
-        <span>Select Month Range</span>
+        <span> {t("dateRangePicker.selectMonthRange")}</span>
       </DialogTitle>
       <DialogContent
         sx={{
@@ -86,11 +88,11 @@ const MonthRangePicker: React.FC<MonthRangePickerProps> = ({
           <Popover
             content={
               <Typography color="warning.main">
-                <ExclamationCircleOutlined /> If selecting 6 or more months,
-                comparison can't be calculated.
+                <ExclamationCircleOutlined />
+                {t("dateRangePicker.warningMessage")}
               </Typography>
             }
-            title="Warning"
+            title={t("dateRangePicker.warningTitle")}
           >
             <Box sx={{ display: "flex", flexDirection: "row" }}>
               <ExclamationCircleOutlined
@@ -107,9 +109,9 @@ const MonthRangePicker: React.FC<MonthRangePickerProps> = ({
         )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
+        <Button onClick={onClose}>{t("actions.cancel")}</Button>
         <Button onClick={handleConfirm} disabled={!range[0]}>
-          Confirm
+          {t("actions.confirm")}
         </Button>
       </DialogActions>
     </Dialog>

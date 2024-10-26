@@ -16,11 +16,13 @@ import { validatePassword } from "./utils";
 import { Typography } from "antd";
 import AuthHeader from "./components/AuthHeader";
 import signupIllustration from "../../assets/images/2.png";
+import { useTranslation } from "react-i18next";
 
 const SignUp: React.FC = () => {
   const navigate = useNavigate();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
+  const { t } = useTranslation();
 
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
@@ -99,7 +101,7 @@ const SignUp: React.FC = () => {
       }}
     >
       {/* Header Section */}
-      <AuthHeader subtitle="Create an account to get started" />
+      <AuthHeader subtitle={t("signup.subtitle")} />
 
       <Box
         sx={{
@@ -146,7 +148,7 @@ const SignUp: React.FC = () => {
               fontSize: "1.1rem", // Slightly larger font size
             }}
           >
-            Already have an account?{" "}
+            {t("signup.existingUser.text")}{" "}
             <strong
               style={{
                 color: "#ff9c8a", // Color for the link
@@ -155,7 +157,7 @@ const SignUp: React.FC = () => {
               }}
               onClick={() => navigate("/login")}
             >
-              Return to Login
+              {t("signup.existingUser.link")}
             </strong>
           </Typography>
         </Box>

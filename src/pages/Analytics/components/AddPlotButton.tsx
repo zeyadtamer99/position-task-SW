@@ -1,6 +1,7 @@
 // src/components/AddPlotButton.tsx
 import React from "react";
 import { Box, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 interface AddPlotButtonProps {
   onClick: () => void;
@@ -11,6 +12,8 @@ const AddPlotButton: React.FC<AddPlotButtonProps> = ({
   onClick,
   height = "400px",
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Box
       sx={{
@@ -54,7 +57,7 @@ const AddPlotButton: React.FC<AddPlotButtonProps> = ({
             textAlign: "center",
           }}
         >
-          + Add new Plot
+          {t("analytics.addPlot")}
         </Typography>
       </Box>
     </Box>

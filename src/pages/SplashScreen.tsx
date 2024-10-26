@@ -12,6 +12,7 @@ import AuthHeader from "./Registeration/components/AuthHeader";
 import image1 from "../assets/images/2.png";
 import image2 from "../assets/images/11.png";
 import image3 from "../assets/images/12.png";
+import { useTranslation } from "react-i18next";
 
 // Update the images array to use the imported variables
 const images = [image1, image2, image3];
@@ -28,7 +29,7 @@ const imageContainerStyle = {
 const SplashScreen: React.FC = () => {
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
-
+  const { t } = useTranslation();
   // Automatically change the active step every 3 seconds
   useEffect(() => {
     const timer = setInterval(() => {
@@ -55,7 +56,7 @@ const SplashScreen: React.FC = () => {
         px: { xs: 2, md: 4 },
       }}
     >
-      <AuthHeader subtitle="SWIPE yourself the job you really want" />{" "}
+      <AuthHeader subtitle={t("home.subtitle")} />
       {/* Pass subtitle */}
       {/* Swipeable Image Viewer */}
       <Box sx={imageContainerStyle}>
@@ -142,7 +143,7 @@ const SplashScreen: React.FC = () => {
           onClick={() => (window.location.href = "/signup")}
           endIcon={<RightOutlined style={{ marginLeft: "180%" }} />} // Use the Ant Design arrow icon as the end icon
         >
-          I'm new to Swipework
+          {t("home.buttons.newUser")}
         </Button>
         <Button
           variant="contained"
@@ -159,7 +160,7 @@ const SplashScreen: React.FC = () => {
           onClick={() => (window.location.href = "/login")}
           endIcon={<RightOutlined style={{ marginLeft: "100%" }} />} // Use the Ant Design arrow icon as the end icon
         >
-          Already have an account
+          {t("home.buttons.existingUser")}
         </Button>
       </Box>
     </Box>

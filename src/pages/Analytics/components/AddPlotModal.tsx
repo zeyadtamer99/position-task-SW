@@ -1,6 +1,7 @@
 // src/components/AddPlotModal.tsx
 import React from "react";
 import { Box, Modal, Typography, Button } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 interface AddPlotModalProps {
   isOpen: boolean;
@@ -25,6 +26,8 @@ const AddPlotModal: React.FC<AddPlotModalProps> = ({
   onAddPlot,
   existingPlots,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Modal open={isOpen} onClose={onClose}>
       <Box
@@ -40,7 +43,7 @@ const AddPlotModal: React.FC<AddPlotModalProps> = ({
         }}
       >
         <Typography variant="h6" sx={{ fontWeight: 600, marginBottom: "16px" }}>
-          Choose a plot type to add
+          {t("modal.choosePlotType")}
         </Typography>
         <Box
           sx={{
@@ -105,7 +108,7 @@ const AddPlotModal: React.FC<AddPlotModalProps> = ({
                       borderRadius: "8px",
                     }}
                   >
-                    Already Added
+                    {t("modal.alreadyAdded")}
                   </Box>
                 )}
               </Box>

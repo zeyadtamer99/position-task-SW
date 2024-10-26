@@ -14,11 +14,13 @@ import LoginForm from "./components/LoginForm";
 import { Typography } from "antd";
 import AuthHeader from "./components/AuthHeader";
 import loginIllustration from "../../assets/images/12.png";
+import { useTranslation } from "react-i18next";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
+  const { t } = useTranslation();
 
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
@@ -76,7 +78,7 @@ const Login: React.FC = () => {
       }}
     >
       {/* Header Section */}
-      <AuthHeader subtitle="Welcome back! Please login to your account." />{" "}
+      <AuthHeader subtitle={t("login.subtitle")} />
       {/* Pass subtitle */}
       <Box
         sx={{
@@ -119,7 +121,7 @@ const Login: React.FC = () => {
               fontSize: "1.1rem",
             }}
           >
-            Don't have an account?{" "}
+            {t("login.newUser.text")}{" "}
             <strong
               style={{
                 color: "#ff9c8a",
@@ -128,7 +130,7 @@ const Login: React.FC = () => {
               }}
               onClick={() => navigate("/signup")}
             >
-              Sign Up
+              {t("login.newUser.link")}
             </strong>
           </Typography>
         </Box>

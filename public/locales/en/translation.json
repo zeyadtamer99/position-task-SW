@@ -1,6 +1,116 @@
 {
+  "general": {
     "welcome": "Welcome to the new app!",
     "login": "Login",
     "signup": "Sign Up"
+  },
+  "modal": {
+    "choosePlotType": "Choose a plot type to add",
+    "alreadyAdded": "Already Added",
+    "addNewPlot": "+ Add new Plot"
+  },
+  "titles": {
+    "savedJobs": "Saved Jobs",
+    "newVisits": "New Visits",
+    "overview": "Overview",
+    "bestPerformingJobs": "Best Performing Jobs",
+    "Followers": "Followers",
+    "Hires": "Hires",
+    "Applies": "Applies"
+  },
+  "subtitles": {
+    "savedJobs": "Total saves based on selected period",
+    "newVisits": "Visits to your jobs based on selected period",
+    "subtitles": {
+    "savedJobs": "Total saves based on selected period",
+    "newVisits": "Visits to your jobs based on selected period",
+    "FollowersPeriod": "Followers during selected period",
+    "HiresPeriod": "Hires during selected period",
+    "AppliesPeriod": "Applies during selected period"
   }
-  
+  },
+  "tableHeaders": {
+    "name": "Name",
+    "performance": "Performance",
+    "applied": "Applied"
+  },
+  "timeRanges": {
+    "currentMonth": "Current Month",
+    "previousMonth": "Previous Month",
+    "last3Months": "Last 3 Months"
+  },
+  "dateRangePicker": {
+    "selectMonthRange": "Select Month Range",
+    "warningMessage": "If selecting 6 or more months, comparison can't be calculated."
+  },
+  "actions": {
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  },
+  "addPlot": {
+    "title": "Let's see the data",
+    "choosePlotType": "Choose a plot type to add",
+    "alreadyAdded": "Already Added",
+    "addNewPlot": "+ Add new Plot"
+  },
+  "filter": {
+    "views": "Views",
+    "clicks": "Clicks"
+  },
+  "months": {
+    "jan": "Jan",
+    "feb": "Feb",
+    "mar": "Mar",
+    "apr": "Apr",
+    "may": "May",
+    "jun": "Jun",
+    "jul": "Jul",
+    "aug": "Aug",
+    "sep": "Sep",
+    "oct": "Oct",
+    "nov": "Nov",
+    "dec": "Dec"
+  },
+  "bestPerformingJobs": {
+    "name": "Name",
+    "performance": "Performance",
+    "applied": "Applied"
+  },
+    "home": {
+      "subtitle": "SWIPE yourself the job you really want",
+      "buttons": {
+        "newUser": "I'm new to Swipework",
+        "existingUser": "Already have an account"
+      }
+    },
+    "signup": {
+      "subtitle": "Create an account to get started",
+      "existingUser": {
+        "text": "Already have an account?",
+        "link": "Return to Login"
+      }
+    },
+    "login": {
+      "subtitle": "Welcome back! Please login to your account.",
+      "newUser": {
+        "text": "Don't have an account?",
+        "link": "Sign Up"
+      }
+    },
+    "social": {
+      "signUpWithFacebook": "Sign Up with Facebook",
+      "signUpWithGoogle": "Sign Up with Google",
+      "signUpWithGitHub": "Sign Up with GitHub"
+    },
+    "form": {
+      "fullName": "Full Name",
+      "emailAddress": "Email Address",
+      "password": "Password",
+      "signUp": "Sign Up",
+      "login": "Login"
+    },
+    "analytics": {
+      "title": "Let’s see the data",
+      "addPlot": "Add a new plot"
+    }
+  }  

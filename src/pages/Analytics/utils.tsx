@@ -49,7 +49,7 @@ export const getPlotWidth = (
 
   return plotType === "Overview" || plotType === "Best Performing Jobs"
     ? "60%"
-    : "29%";
+    : "29.5%";
 };
 
 export const formatDate = (date: Date) => {

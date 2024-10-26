@@ -6,6 +6,7 @@ import {
   buildStyles,
 } from "react-circular-progressbar";
 import { SavedJobsData } from "../../../../utils/dataProcessor";
+import { useTranslation } from "react-i18next";
 
 interface SavedJobsPlotProps {
   data: SavedJobsData | null;
@@ -15,8 +16,9 @@ const SavedJobsPlot: React.FC<SavedJobsPlotProps> = ({ data }) => {
   const [timeRange, setTimeRange] = useState<"current" | "previous" | "last3">(
     "current"
   );
+  const { t } = useTranslation();
 
-  if (!data) return <Typography>Loading...</Typography>;
+  if (!data) return <Typography>{t("general.loading")}</Typography>;
 
   console.log("📊 Selected Time Range:", timeRange);
 
@@ -83,7 +85,7 @@ const SavedJobsPlot: React.FC<SavedJobsPlotProps> = ({ data }) => {
               fontSize: { xs: "0.75rem", md: "0.875rem", lg: "1rem" },
             }}
           >
-            Saved Jobs
+            {t("titles.savedJobs")}
           </Typography>
           <Typography
             sx={{
@@ -91,7 +93,7 @@ const SavedJobsPlot: React.FC<SavedJobsPlotProps> = ({ data }) => {
               fontSize: { xs: "0.65rem", md: "0.775rem", lg: "0.8rem" },
             }}
           >
-            Total saves based on selected period
+            {t("subtitles.savedJobs")}
           </Typography>
         </Box>
         {/* Dropdown for selecting the time range */}
@@ -109,9 +111,9 @@ const SavedJobsPlot: React.FC<SavedJobsPlotProps> = ({ data }) => {
             height: "fit-content",
           }}
         >
-          <MenuItem value="current">Current Month</MenuItem>
-          <MenuItem value="previous">Previous Month</MenuItem>
-          <MenuItem value="last3">Last 3 Months</MenuItem>
+          <MenuItem value="current">{t("timeRanges.currentMonth")}</MenuItem>
+          <MenuItem value="previous">{t("timeRanges.previousMonth")}</MenuItem>
+          <MenuItem value="last3">{t("timeRanges.last3Months")}</MenuItem>
         </Select>
       </Box>
 

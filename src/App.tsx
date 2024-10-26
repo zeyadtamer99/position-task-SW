@@ -6,6 +6,7 @@ import Login from "./pages/Registeration/Login";
 import SignUp from "./pages/Registeration/SignUp";
 import SplashScreen from "./pages/SplashScreen";
 import AnalyticsPage from "./pages/Analytics/AnalyticsPage";
+import "./utils/i18n";
 
 function App() {
   return (

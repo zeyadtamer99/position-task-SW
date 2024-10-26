@@ -7,6 +7,7 @@ import {
   calculateCurrentMonthData,
   calculatePreviousMonthComparison,
 } from "../../utils";
+import { useTranslation } from "react-i18next";
 
 interface SmallStatPlotProps {
   emoji: string;
@@ -44,6 +45,7 @@ const SmallStatPlot: React.FC<SmallStatPlotProps> = ({
     Hires: "hires",
     Views: "views", // Adjust if other titles map to "views" or other fields
   };
+  const { t } = useTranslation();
 
   useEffect(() => {
     const metricKey = metricKeyMap[title];
@@ -105,7 +107,7 @@ const SmallStatPlot: React.FC<SmallStatPlotProps> = ({
 
       <Box sx={{ textAlign: "center" }}>
         <Typography sx={{ fontSize: "2rem", fontWeight: 600 }}>
-          {title}
+          {t(`titles.${title}`)} {/* Translate title */}
         </Typography>
 
         <Box
@@ -154,7 +156,7 @@ const SmallStatPlot: React.FC<SmallStatPlotProps> = ({
           {count}
         </Typography>
         <Typography variant="body2" sx={{ textAlign: "center" }}>
-          {description}
+          {t(`subtitles.${description}`)} {/* Translate description */}
         </Typography>
         {changePercentage !== undefined && (
           <Typography

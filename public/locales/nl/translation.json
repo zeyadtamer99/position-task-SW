@@ -1,0 +1,113 @@
+{
+    "general": {
+      "welcome": "Welkom bij de nieuwe app!",
+      "login": "Inloggen",
+      "signup": "Aanmelden"
+    },
+    "modal": {
+      "choosePlotType": "Kies een grafiektype om toe te voegen",
+      "alreadyAdded": "Al toegevoegd",
+      "addNewPlot": "+ Nieuwe grafiek toevoegen"
+    },
+    "titles": {
+      "savedJobs": "Opgeslagen vacatures",
+      "newVisits": "Nieuwe bezoeken",
+      "overview": "Overzicht",
+      "bestPerformingJobs": "Best presterende vacatures",
+      "Followers": "Volgers",
+      "Hires": "Aanwervingen",
+      "Applies": "Sollicitaties"
+    },
+    "subtitles": {
+      "savedJobs": "Totaal opgeslagen in de geselecteerde periode",
+      "newVisits": "Bezoeken aan je vacatures in de geselecteerde periode",
+      "hires": "Aanwervingen tijdens de geselecteerde periode",
+  "applies": "Sollicitaties tijdens de geselecteerde periode",
+  "followers": "Volgers tijdens de geselecteerde periode"
+    },
+    "tableHeaders": {
+      "name": "Naam",
+      "performance": "Prestatie",
+      "applied": "Toegepast"
+    },
+    "timeRanges": {
+      "currentMonth": "Huidige maand",
+      "previousMonth": "Vorige maand",
+      "last3Months": "Laatste 3 maanden"
+    },
+    "dateRangePicker": {
+      "selectMonthRange": "Selecteer maandbereik",
+      "warningMessage": "Als u 6 of meer maanden selecteert, kan er geen vergelijking worden gemaakt."
+    },
+    "actions": {
+      "cancel": "Annuleren",
+      "confirm": "Bevestigen"
+    },
+    "addPlot": {
+      "title": "Laten we de gegevens bekijken",
+      "choosePlotType": "Kies een grafiektype om toe te voegen",
+      "alreadyAdded": "Al toegevoegd",
+      "addNewPlot": "+ Nieuwe grafiek toevoegen"
+    },
+    "filter": {
+      "views": "Weergaven",
+      "clicks": "Klikken"
+    },
+    "months": {
+      "jan": "Jan",
+      "feb": "Feb",
+      "mar": "Mrt",
+      "apr": "Apr",
+      "may": "Mei",
+      "jun": "Jun",
+      "jul": "Jul",
+      "aug": "Aug",
+      "sep": "Sep",
+      "oct": "Okt",
+      "nov": "Nov",
+      "dec": "Dec"
+    },
+    "bestPerformingJobs": {
+      "name": "Naam",
+      "performance": "Prestatie",
+      "applied": "Toegepast"
+    },
+    "home": {
+      "subtitle": "SWIPE jezelf naar de baan die je echt wilt",
+      "buttons": {
+        "newUser": "Ik ben nieuw bij Swipework",
+        "existingUser": "Heb al een account"
+      }
+    },
+    "signup": {
+      "subtitle": "Maak een account aan om te beginnen",
+      "existingUser": {
+        "text": "Heb je al een account?",
+        "link": "Terug naar Inloggen"
+      }
+    },
+    "login": {
+      "subtitle": "Welkom terug! Log in op je account.",
+      "newUser": {
+        "text": "Nog geen account?",
+        "link": "Aanmelden"
+      }
+    },
+    "social": {
+      "signUpWithFacebook": "Aanmelden met Facebook",
+      "signUpWithGoogle": "Aanmelden met Google",
+      "signUpWithGitHub": "Aanmelden met GitHub"
+    },
+    "form": {
+      "fullName": "Volledige naam",
+      "emailAddress": "E-mailadres",
+      "password": "Wachtwoord",
+      "signUp": "Aanmelden",
+      "login": "Inloggen"
+    },
+    "analytics": {
+      "title": "Laten we de gegevens bekijken",
+      "addPlot": "Nieuwe grafiek toevoegen"
+    }
+  }
+  

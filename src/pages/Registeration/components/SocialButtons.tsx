@@ -5,12 +5,15 @@ import {
   GoogleOutlined,
   GithubOutlined,
 } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 
 interface SocialButtonsProps {
   onSocialSignUp: (provider: string) => void;
 }
 
 const SocialButtons: React.FC<SocialButtonsProps> = ({ onSocialSignUp }) => {
+  const { t } = useTranslation();
+
   return (
     <Box
       sx={{
@@ -34,7 +37,7 @@ const SocialButtons: React.FC<SocialButtonsProps> = ({ onSocialSignUp }) => {
         onClick={() => onSocialSignUp("Facebook")}
       >
         <FacebookOutlined style={{ fontSize: "1.5rem", marginRight: "8px" }} />
-        Sign Up with Facebook
+        {t("social.signUpWithFacebook")}
       </Button>
       <Button
         variant="contained"
@@ -50,7 +53,7 @@ const SocialButtons: React.FC<SocialButtonsProps> = ({ onSocialSignUp }) => {
         onClick={() => onSocialSignUp("Google")}
       >
         <GoogleOutlined style={{ fontSize: "1.5rem", marginRight: "8px" }} />
-        Sign Up with Google
+        {t("social.signUpWithGoogle")}
       </Button>
       <Button
         variant="contained"
@@ -66,7 +69,7 @@ const SocialButtons: React.FC<SocialButtonsProps> = ({ onSocialSignUp }) => {
         onClick={() => onSocialSignUp("GitHub")}
       >
         <GithubOutlined style={{ fontSize: "1.5rem", marginRight: "8px" }} />
-        Sign Up with GitHub
+        {t("social.signUpWithGitHub")}
       </Button>
     </Box>
   );

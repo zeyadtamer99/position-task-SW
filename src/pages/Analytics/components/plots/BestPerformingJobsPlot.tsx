@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { BestPerformingJobData } from "../../../../utils/dataProcessor";
 import { formatDate } from "../../utils";
+import { useTranslation } from "react-i18next";
 
 interface BestPerformingJobsPlotProps {
   data: BestPerformingJobData[] | null;
@@ -20,6 +21,8 @@ interface BestPerformingJobsPlotProps {
 const BestPerformingJobsPlot: React.FC<BestPerformingJobsPlotProps> = ({
   data,
 }) => {
+  const { t } = useTranslation();
+
   if (!data) return null;
 
   return (
@@ -42,7 +45,7 @@ const BestPerformingJobsPlot: React.FC<BestPerformingJobsPlotProps> = ({
           fontSize: { xs: "1rem", md: "1.25rem" },
         }}
       >
-        Best Performing Jobs
+        {t("titles.bestPerformingJobs")}
       </Typography>
       <TableContainer sx={{ maxWidth: "100%" }}>
         <Table stickyHeader>
@@ -55,7 +58,7 @@ const BestPerformingJobsPlot: React.FC<BestPerformingJobsPlotProps> = ({
                   color: "text.secondary",
                 }}
               >
-                Name
+                {t("tableHeaders.name")}
               </TableCell>
               <TableCell
                 sx={{
@@ -64,7 +67,7 @@ const BestPerformingJobsPlot: React.FC<BestPerformingJobsPlotProps> = ({
                   color: "text.secondary",
                 }}
               >
-                Performance
+                {t("tableHeaders.performance")}
               </TableCell>
               <TableCell
                 sx={{
@@ -73,7 +76,7 @@ const BestPerformingJobsPlot: React.FC<BestPerformingJobsPlotProps> = ({
                   color: "text.secondary",
                 }}
               >
-                Applied
+                {t("tableHeaders.applied")}
               </TableCell>
             </TableRow>
           </TableHead>

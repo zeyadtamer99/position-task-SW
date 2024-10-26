@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Box, Button } from "@mui/material";
 import { Input } from "antd";
 import { reusableButtonStyle } from "../../../assets/global-styles";
+import { useTranslation } from "react-i18next";
 
 interface LoginFormProps {
   onSubmit: (email: string, password: string) => void;
@@ -10,6 +11,7 @@ interface LoginFormProps {
 const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { t } = useTranslation();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -26,7 +28,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
       onSubmit={handleSubmit}
     >
       <Input
-        placeholder="Email Address"
+        placeholder={t("form.emailAddress")}
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
@@ -37,7 +39,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
         }}
       />
       <Input.Password
-        placeholder="Password"
+        placeholder={t("form.password")}
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         style={{
@@ -59,7 +61,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
         fullWidth
         type="submit"
       >
-        Login
+        {t("form.login")}
       </Button>
     </Box>
   );

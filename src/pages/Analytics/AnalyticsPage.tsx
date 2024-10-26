@@ -1,5 +1,7 @@
+// src/pages/AnalyticsPage.tsx
 import React, { useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
+import { addDoc, collection, doc, setDoc, Timestamp } from "firebase/firestore";
 import NewVisitsPlot from "./components/plots/NewVisitsPlot";
 import OverviewPlot from "./components/plots/OverviewPlot";
 import SavedJobsPlot from "./components/plots/SavedJobsPlot";
@@ -9,8 +11,8 @@ import AddPlotModal from "./components/AddPlotModal";
 import BestPerformingJobsPlot from "./components/plots/BestPerformingJobsPlot";
 import Sidebar from "../../components/Sidebar";
 import { CloseOutlined } from "@ant-design/icons";
-import { Button } from "antd";
 import { getPlotWidth, getResponsiveHeight } from "./utils";
+import { db } from "../../../config/firebase";
 
 const plotTypes = [
   "Overview",
@@ -22,10 +24,104 @@ const plotTypes = [
   "Hires",
 ];
 
+// Sample job titles for random selection
+const jobTitles = [
+  "Software Engineer",
+  "Data Scientist",
+  "Product Manager",
+  "Marketing Specialist",
+  "Graphic Designer",
+  "Customer Support Specialist",
+  "Sales Representative",
+  "Content Writer",
+  "Account Manager",
+  "Project Manager",
+];
+
 const AnalyticsPage: React.FC = () => {
   const [plots, setPlots] = useState<string[]>(["Overview"]);
   const [isModalOpen, setModalOpen] = useState(false);
   const [hoveredPlotIndex, setHoveredPlotIndex] = useState<number | null>(null);
+
+  // Helper function to generate random metrics data
+  const generateRandomMetrics = () => ({
+    followers: Math.floor(Math.random() * 500),
+    applies: Math.floor(Math.random() * 100),
+    hires: Math.floor(Math.random() * 20),
+    saved: Math.floor(Math.random() * 200),
+    visits: Math.floor(Math.random() * 1000),
+    clicks: Math.floor(Math.random() * 800),
+    views: Math.floor(Math.random() * 1200),
+  });
+
+  // Helper function to generate a random date within the last year
+  const getRandomDateWithinPastYear = () => {
+    const now = new Date();
+    const oneYearAgo = new Date(
+      now.getFullYear() - 1,
+      now.getMonth(),
+      now.getDate()
+    );
+    return new Timestamp(
+      Math.floor(
+        oneYearAgo.getTime() / 1000 +
+          Math.random() * (now.getTime() / 1000 - oneYearAgo.getTime() / 1000)
+      ),
+      0
+    );
+  };
+
+  // Function to add random jobs with metrics data to Firestore
+  const handleAddRandomJobs = async () => {
+    const jobsCollection = collection(db, "jobs");
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    for (let i = 0; i < 3; i++) {
+      // Randomly select a job title and generate a postedOn date
+      const jobTitle = jobTitles[i + 1];
+      const postedOnDate = getRandomDateWithinPastYear();
+
+      // Add a new job document with the name and postedOn date
+      const jobDocRef = await addDoc(jobsCollection, {
+        name: jobTitle,
+        postedOn: postedOnDate,
+      });
+
+      const metricsCollection = collection(jobDocRef, "metrics");
+      const jobPostedYear = postedOnDate.toDate().getFullYear();
+
+      // Add random metrics for each of the 12 months with YYYYMM format for IDs
+      for (let monthIndex = 0; monthIndex < 12; monthIndex++) {
+        const monthName = months[monthIndex];
+        const monthId = `${jobPostedYear}${String(monthIndex + 1).padStart(
+          2,
+          "0"
+        )}`; // Format: YYYYMM
+
+        await setDoc(doc(metricsCollection, monthId), {
+          month: monthName,
+          ...generateRandomMetrics(),
+        });
+      }
+    }
+
+    console.log(
+      "Three random job documents with name, postedOn date, and 12 months of metrics have been added."
+    );
+  };
 
   const handleAddPlot = (plotType: string) => {
     setPlots([...plots, plotType]);
@@ -141,6 +237,17 @@ const AnalyticsPage: React.FC = () => {
         <Typography variant="h5" sx={{ fontWeight: 600, marginBottom: "16px" }}>
           Let’s see the data
         </Typography>
+
+        {/* Button to add random jobs with metrics */}
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleAddRandomJobs}
+          style={{ marginBottom: "20px" }}
+        >
+          Add Random Jobs with Metrics
+        </Button>
+
         <Box
           sx={{
             display: "flex",

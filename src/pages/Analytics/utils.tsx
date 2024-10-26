@@ -50,3 +50,11 @@ export const getPlotWidth = (
     ? "65%"
     : "25%";
 };
+
+export const formatDate = (date: Date) => {
+  return new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  }).format(date);
+};

@@ -1,20 +1,62 @@
-import React from "react";
-import { Box, Typography } from "@mui/material";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+// src/components/SavedJobsPlot.tsx
+import React, { useState } from "react";
+import { Box, Typography, Select, MenuItem } from "@mui/material";
+import {
+  CircularProgressbarWithChildren,
+  buildStyles,
+} from "react-circular-progressbar";
+import { SavedJobsData } from "../../../../utils/dataProcessor";
 
 interface SavedJobsPlotProps {
-  data: { percentage: number } | null;
+  data: SavedJobsData | null;
 }
 
 const SavedJobsPlot: React.FC<SavedJobsPlotProps> = ({ data }) => {
+  const [timeRange, setTimeRange] = useState<"current" | "previous" | "last3">(
+    "current"
+  );
+
   if (!data) return <Typography>Loading...</Typography>;
+
+  console.log("📊 Selected Time Range:", timeRange);
+
+  // Calculate the percentage based on selected time range
+  let percentage = 0;
+
+  switch (timeRange) {
+    case "current":
+      percentage =
+        data.totalSaves > 0
+          ? Math.round((data.savesCurrentMonth / data.totalSaves) * 100)
+          : 0;
+      console.log("📅 Current Month Saves:", data.savesCurrentMonth);
+      break;
+    case "previous":
+      percentage =
+        data.totalSaves > 0
+          ? Math.round((data.savesPreviousMonth / data.totalSaves) * 100)
+          : 0;
+      console.log("⬅️ Previous Month Saves:", data.savesPreviousMonth);
+      break;
+    case "last3":
+      percentage =
+        data.totalSaves > 0
+          ? Math.round((data.savesLast3Months / data.totalSaves) * 100)
+          : 0;
+      console.log("📅 Last 3 Months Saves:", data.savesLast3Months);
+      break;
+    default:
+      break;
+  }
+
+  console.log("📈 Calculated Percentage:", percentage);
 
   return (
     <Box
       sx={{
         backgroundColor: "#fff",
         borderRadius: "16px",
-        padding: "16px",
+        padding: { xs: "12px", md: "16px" },
         boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
         display: "flex",
         flexDirection: "column",
@@ -23,29 +65,88 @@ const SavedJobsPlot: React.FC<SavedJobsPlotProps> = ({ data }) => {
         height: "100%", // Consistent height
       }}
     >
-      {/* Title and subtitle container with left alignment */}
-      <Box sx={{ width: "100%", textAlign: "left", marginBottom: "16px" }}>
-        <Typography variant="h6" sx={{ fontWeight: 600, marginBottom: "4px" }}>
-          Saved Jobs
-        </Typography>
-        <Typography variant="body2" sx={{ color: "#888" }}>
-          Saved in total
-        </Typography>
+      <Box
+        sx={{
+          width: "100%",
+          marginBottom: "16px",
+          display: "flex",
+          flexDirection: "row",
+          marginTop: { xs: "24px", md: "20px", xl: "0px" },
+        }}
+      >
+        {/* Title and subtitle container with left alignment */}
+        <Box sx={{ width: "50%", textAlign: "left" }}>
+          <Typography
+            sx={{
+              fontWeight: 600,
+              marginBottom: "4px",
+              fontSize: { xs: "0.75rem", md: "0.875rem", lg: "1rem" },
+            }}
+          >
+            Saved Jobs
+          </Typography>
+          <Typography
+            sx={{
+              color: "#888",
+              fontSize: { xs: "0.65rem", md: "0.775rem", lg: "0.8rem" },
+            }}
+          >
+            Total saves based on selected period
+          </Typography>
+        </Box>
+        {/* Dropdown for selecting the time range */}
+        <Select
+          value={timeRange}
+          onChange={(e) =>
+            setTimeRange(e.target.value as "current" | "previous" | "last3")
+          }
+          size="small"
+          sx={{
+            marginBottom: "16px",
+            fontSize: { xs: "0.65rem", md: "0.775rem", lg: "0.8rem" },
+            width: { xs: "40%", md: "50%", lg: "50%", xl: "40%" },
+            marginLeft: { md: "0.1%", lg: "0%", xl: "4%" },
+            height: "fit-content",
+          }}
+        >
+          <MenuItem value="current">Current Month</MenuItem>
+          <MenuItem value="previous">Previous Month</MenuItem>
+          <MenuItem value="last3">Last 3 Months</MenuItem>
+        </Select>
       </Box>
 
-      <Box sx={{ width: "70%" }}>
-        {/* Adjust width for better visual appeal */}
-        <CircularProgressbar
-          value={data.percentage}
-          text={`${data.percentage}%`}
+      <Box sx={{ width: { xs: "80%", sm: "60%" } }}>
+        {/* Circular Progress Bar with rounded edges */}
+        <CircularProgressbarWithChildren
+          value={isNaN(percentage) ? 0 : percentage}
           styles={buildStyles({
-            textColor: "#4a4a4a", // Darker color for text
-            pathColor: "#7b61ff", // Gradient-like color to match the design
-            trailColor: "#ececec", // Lighter trail color for better contrast
-            textSize: "1rem", // Larger text for better readability
+            textColor: "#4a4a4a",
+            pathColor: "#7b61ff",
+            trailColor: "#ececec",
+            strokeLinecap: "round",
           })}
-          strokeWidth={15} // Slightly thicker stroke width
-        />
+          strokeWidth={10}
+        >
+          <Typography
+            sx={{
+              fontWeight: 600,
+              color: "#4a4a4a",
+              fontSize: {
+                xs: "1.5rem",
+                md: "2rem",
+                lg: "3rem",
+                xl: "4.5rem",
+              },
+              marginBottom: {
+                xs: "24px",
+                md: "24px",
+                xl: "30px",
+              },
+            }}
+          >
+            {`${isNaN(percentage) ? 0 : percentage}%`}
+          </Typography>
+        </CircularProgressbarWithChildren>
       </Box>
     </Box>
   );

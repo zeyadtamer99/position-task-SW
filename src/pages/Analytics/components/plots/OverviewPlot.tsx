@@ -18,11 +18,16 @@ interface OverviewPlotProps {
 const OverviewPlot: React.FC<OverviewPlotProps> = ({ data }) => {
   const [filter, setFilter] = useState<FilterType>("views");
 
+  // Return null if no data is passed in
   if (!data) return null;
+
+  // Handle filter change (views or clicks)
   const handleFilterChange = (event: SelectChangeEvent<"views" | "clicks">) => {
     setFilter(event.target.value as FilterType);
   };
-  const chartData = data.views.map((value, index) => ({
+
+  // Prepare chart data to include both views and clicks for each month
+  const chartData = data.views.map((viewValue, index) => ({
     name: [
       "Jan",
       "Feb",
@@ -37,7 +42,7 @@ const OverviewPlot: React.FC<OverviewPlotProps> = ({ data }) => {
       "Nov",
       "Dec",
     ][index],
-    views: value,
+    views: viewValue,
     clicks: data.clicks[index],
   }));
 
@@ -49,8 +54,8 @@ const OverviewPlot: React.FC<OverviewPlotProps> = ({ data }) => {
         padding: "24px",
         paddingTop: "16px", // Smaller padding on top
         boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-        width: "100%", // Ensure it takes full width as defined in the parent container
-        height: "100%", // Set a consistent height for all plots
+        width: "100%", // Full width of the parent
+        height: "100%", // Consistent height for all plots
         display: "flex",
         flexDirection: "column",
       }}
@@ -77,6 +82,7 @@ const OverviewPlot: React.FC<OverviewPlotProps> = ({ data }) => {
           <MenuItem value="clicks">Clicks</MenuItem>
         </Select>
       </Box>
+
       {/* Chart Container */}
       <ResponsiveContainer width="100%" height="90%">
         <BarChart
@@ -85,7 +91,7 @@ const OverviewPlot: React.FC<OverviewPlotProps> = ({ data }) => {
         >
           <XAxis dataKey="name" />
           <Tooltip />
-          <Bar dataKey="value" fill="#5d47ff" radius={[5, 5, 0, 0]} />
+          <Bar dataKey={filter} fill="#5d47ff" radius={[5, 5, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </Box>

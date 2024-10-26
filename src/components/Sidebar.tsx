@@ -21,8 +21,8 @@ const Sidebar: React.FC = () => {
         src={logo}
         alt="Logo"
         style={{
-          width: "100%",
-          maxWidth: "500px",
+          width: "80%",
+          maxWidth: "400px",
         }}
       />
     </Box>

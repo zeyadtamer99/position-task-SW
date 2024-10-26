@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "@mui/material";
 import { BestPerformingJobData } from "../../../../utils/dataProcessor";
+import { formatDate } from "../../utils";
 
 interface BestPerformingJobsPlotProps {
   data: BestPerformingJobData[] | null;
@@ -45,7 +46,17 @@ const BestPerformingJobsPlot: React.FC<BestPerformingJobsPlotProps> = ({
         <TableBody>
           {data.map((job) => (
             <TableRow key={job.name}>
-              <TableCell>{job.name}</TableCell>
+              <TableCell>
+                <Typography variant="body1" sx={{ fontWeight: 600 }}>
+                  {job.name}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ color: "grey.600", fontSize: "0.8rem" }}
+                >
+                  {formatDate(job.postedOn)}
+                </Typography>
+              </TableCell>
               <TableCell>{job.performance}%</TableCell>
               <TableCell>{job.applied}</TableCell>
             </TableRow>

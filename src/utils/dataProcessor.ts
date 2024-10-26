@@ -36,57 +36,197 @@ export interface OverviewData {
 }
 
 export const processOverviewData = (jobs: Job[]): OverviewData => {
-  const initialData: OverviewData = { views: [], clicks: [] };
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const initialData: OverviewData = {
+    views: Array(12).fill(0),
+    clicks: Array(12).fill(0),
+  };
 
   jobs.forEach((job) => {
     job.metrics.forEach((metric) => {
-      initialData.views.push(metric.views);
-      initialData.clicks.push(metric.clicks);
+      const monthIndex = months.indexOf(metric.month); // Find index of the month
+      if (monthIndex >= 0) {
+        // Aggregate views and clicks for each month
+        initialData.views[monthIndex] += metric.views;
+        initialData.clicks[monthIndex] += metric.clicks;
+      }
     });
   });
 
-  console.log("📊 Processed Overview Data:", initialData);
+  console.log("📊 Aggregated Overview Data:", initialData);
   return initialData;
 };
-// src/utils/processDataForPlots.ts
+
 export interface NewVisitsData {
-  percentage: number;
+  totalVisits: number;
+  visitsCurrentMonth: number;
+  visitsPreviousMonth: number;
+  visitsLast3Months: number;
 }
 
 export const processNewVisitsData = (jobs: Job[]): NewVisitsData => {
-  const totalVisits = jobs.reduce(
-    (acc, job) =>
-      acc + job.metrics.reduce((sum, metric) => sum + metric.visits, 0),
-    0
-  );
-  const percentage = Math.min(Math.round((totalVisits / 5000) * 100), 100);
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth();
+  const previousMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+  const last3Months = [
+    currentMonth,
+    previousMonth,
+    previousMonth - 1 < 0 ? 11 : previousMonth - 1,
+  ];
 
-  const result = { percentage };
-  console.log("👀 Processed New Visits Data:", result);
+  const monthIndexMap: Record<string, number> = {
+    January: 0,
+    February: 1,
+    March: 2,
+    April: 3,
+    May: 4,
+    June: 5,
+    July: 6,
+    August: 7,
+    September: 8,
+    October: 9,
+    November: 10,
+    December: 11,
+  };
+
+  let totalVisits = 0;
+  let visitsCurrentMonth = 0;
+  let visitsPreviousMonth = 0;
+  let visitsLast3Months = 0;
+
+  console.log("📅 Processing Visits Data by Month");
+
+  jobs.forEach((job) => {
+    job.metrics.forEach((metric) => {
+      const metricMonthIndex = monthIndexMap[metric.month];
+
+      totalVisits += metric.visits;
+      console.log(`🔍 ${metric.month} - Visits Count: ${metric.visits}`);
+
+      if (metricMonthIndex === currentMonth) {
+        visitsCurrentMonth += metric.visits;
+        console.log("📅 Adding to Current Month Visits:", visitsCurrentMonth);
+      }
+
+      if (metricMonthIndex === previousMonth) {
+        visitsPreviousMonth += metric.visits;
+        console.log("⬅️ Adding to Previous Month Visits:", visitsPreviousMonth);
+      }
+
+      if (last3Months.includes(metricMonthIndex)) {
+        visitsLast3Months += metric.visits;
+        console.log("📅 Adding to Last 3 Months Visits:", visitsLast3Months);
+      }
+    });
+  });
+
+  const result = {
+    totalVisits,
+    visitsCurrentMonth,
+    visitsPreviousMonth,
+    visitsLast3Months,
+  };
+
+  console.log("👀 Processed New Visits Data Result:", result);
   return result;
 };
+
 // src/utils/processDataForPlots.ts
 export interface SavedJobsData {
   percentage: number;
-  totalJobs: number;
+  totalSaves: number;
+  savesCurrentMonth: number;
+  savesPreviousMonth: number;
+  savesLast3Months: number;
 }
 
 export const processSavedJobsData = (jobs: Job[]): SavedJobsData => {
-  const totalJobs = jobs.length;
-  const totalSaved = jobs.reduce(
-    (acc, job) =>
-      acc + job.metrics.reduce((sum, metric) => sum + metric.saved, 0),
-    0
-  );
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth();
+  const previousMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+  const last3Months = [
+    currentMonth,
+    previousMonth,
+    previousMonth - 1 < 0 ? 11 : previousMonth - 1,
+  ];
+
+  const monthIndexMap: Record<string, number> = {
+    January: 0,
+    February: 1,
+    March: 2,
+    April: 3,
+    May: 4,
+    June: 5,
+    July: 6,
+    August: 7,
+    September: 8,
+    October: 9,
+    November: 10,
+    December: 11,
+  };
+
+  let totalSaves = 0;
+  let savesCurrentMonth = 0;
+  let savesPreviousMonth = 0;
+  let savesLast3Months = 0;
+
+  console.log("📅 Processing Saves Data by Month");
+
+  jobs.forEach((job) => {
+    job.metrics.forEach((metric) => {
+      const metricMonthIndex = monthIndexMap[metric.month];
+
+      totalSaves += metric.saved;
+      console.log(`🔍 ${metric.month} - Saved Count: ${metric.saved}`);
+
+      if (metricMonthIndex === currentMonth) {
+        savesCurrentMonth += metric.saved;
+        console.log("📅 Adding to Current Month Saves:", savesCurrentMonth);
+      }
+
+      if (metricMonthIndex === previousMonth) {
+        savesPreviousMonth += metric.saved;
+        console.log("⬅️ Adding to Previous Month Saves:", savesPreviousMonth);
+      }
+
+      if (last3Months.includes(metricMonthIndex)) {
+        savesLast3Months += metric.saved;
+        console.log("📅 Adding to Last 3 Months Saves:", savesLast3Months);
+      }
+    });
+  });
+
   const percentage = Math.min(
-    Math.round((totalSaved / (totalJobs * 100)) * 100),
+    Math.round((savesCurrentMonth / totalSaves) * 100),
     100
   );
 
-  const result = { percentage, totalJobs };
-  console.log("💼 Processed Saved Jobs Data:", result);
+  const result = {
+    percentage,
+    totalSaves,
+    savesCurrentMonth,
+    savesPreviousMonth,
+    savesLast3Months,
+  };
+
+  console.log("💼 Processed Saved Jobs Data Result:", result);
   return result;
 };
+
 // src/utils/processDataForPlots.ts
 export interface SmallStatData {
   title: string;
@@ -141,6 +281,7 @@ export interface BestPerformingJobData {
   name: string;
   performance: number;
   applied: number;
+  postedOn: Date;
 }
 
 export const processBestPerformingJobsData = (
@@ -155,7 +296,12 @@ export const processBestPerformingJobsData = (
       0
     );
 
-    return { name: job.name, performance: Math.round(performance), applied };
+    return {
+      name: job.name,
+      performance: Math.round(performance),
+      applied,
+      postedOn: job.postedOn, // Add postedOn to the data structure
+    };
   });
 
   console.log("🏆 Processed Best Performing Jobs Data:", bestPerformingJobs);

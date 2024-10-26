@@ -24,6 +24,7 @@ import {
   SavedJobsData,
   SmallStatData,
 } from "../../utils/dataProcessor";
+import { Job } from "../../models/Job";
 
 const plotTypes = [
   "Overview",
@@ -39,6 +40,7 @@ const AnalyticsPage: React.FC = () => {
   const [plots, setPlots] = useState<string[]>(["Overview"]);
   const [isModalOpen, setModalOpen] = useState(false);
   const [hoveredPlotIndex, setHoveredPlotIndex] = useState<number | null>(null);
+  const [jobs, setJobs] = useState<Job[]>([]);
   // Data states for each plot
   const [overviewData, setOverviewData] = useState<OverviewData | null>(null);
   const [newVisitsData, setNewVisitsData] = useState<NewVisitsData | null>(
@@ -56,6 +58,7 @@ const AnalyticsPage: React.FC = () => {
     const loadData = async () => {
       console.log("🚀 Fetching jobs data from Firestore...");
       const fetchedJobs = await fetchJobsFromFirebase();
+      setJobs(fetchedJobs);
       if (fetchedJobs) {
         // Process and set data for each plot
         setOverviewData(processOverviewData(fetchedJobs));
@@ -92,25 +95,31 @@ const AnalyticsPage: React.FC = () => {
       case "Followers":
       case "Applies":
       case "Hires": {
-        // Find the corresponding data for the current plotType
         const statData = smallStatData.find((data) => data.title === plotType);
         if (statData) {
           return (
             <SmallStatPlot
               emoji={statData.emoji}
               title={statData.title}
-              count={statData.number} // Pass the 'number' as count
+              jobs={jobs}
               description={statData.description}
+              changePercentage={statData.changePercentage}
+              onMonthRangeChange={handleMonthRangeChange}
             />
           );
         }
-        return null; // Return null if data is not found for the plotType
+        return null;
       }
 
       default:
         console.warn(`Unknown plot type: ${plotType}`);
         return null;
     }
+  };
+
+  const handleMonthRangeChange = (range: { start: number; end?: number }) => {
+    const updatedData = processSmallStatData(jobs, range);
+    setSmallStatData(updatedData);
   };
 
   // Inside AnalyticsPage component
@@ -121,30 +130,14 @@ const AnalyticsPage: React.FC = () => {
     const plotWidth = getPlotWidth(plotType, previousPlotType, nextPlotType);
     const isSideBySide = plotWidth === "50%";
 
-    // Check if the current plot and the following two plots are SmallStatPlots in the order expected
-    const isSmallStatRow =
-      plotType === "Followers" &&
-      plots[index + 1] === "Applies" &&
-      plots[index + 2] === "Hires";
-
     return (
       <Box
         key={index}
         sx={{
-          width:
-            isSmallStatRow ||
-            (plotType === "Applies" && previousPlotType === "Followers") ||
-            (plotType === "Hires" && previousPlotType === "Applies")
-              ? { xs: "20%", md: "32%", lg: "32.2%", xl: "29.4%" }
-              : { xs: "100%", md: "49%", lg: plotWidth },
-          height:
-            isSmallStatRow ||
-            (plotType === "Applies" && previousPlotType === "Followers") ||
-            (plotType === "Hires" && previousPlotType === "Applies")
-              ? { xs: "200px", md: "250px" } // Apply height when in a SmallStat row
-              : isSideBySide
-              ? { xs: "250px", md: "400px" }
-              : { xs: "350px", md: "500px" },
+          width: { xs: "100%", md: "49%", lg: plotWidth },
+          height: isSideBySide
+            ? { xs: "250px", md: "400px" }
+            : { xs: "350px", md: "500px" },
           display: { xs: isSideBySide ? "flex" : "block", md: "block" },
           flexDirection: { xs: "row", md: "column" },
           gap: { xs: "8px", md: "0" },

@@ -233,49 +233,92 @@ export interface SmallStatData {
   emoji: string;
   number: number;
   description: string;
+  changePercentage?: number; // New field to store percentage change
 }
 
-export const processSmallStatData = (jobs: Job[]): SmallStatData[] => {
-  const followers = jobs.reduce(
-    (acc, job) =>
-      acc + job.metrics.reduce((sum, metric) => sum + metric.followers, 0),
-    0
-  );
-  const applies = jobs.reduce(
-    (acc, job) =>
-      acc + job.metrics.reduce((sum, metric) => sum + metric.applies, 0),
-    0
-  );
-  const hires = jobs.reduce(
-    (acc, job) =>
-      acc + job.metrics.reduce((sum, metric) => sum + metric.hires, 0),
-    0
-  );
+export const processSmallStatData = (
+  jobs: Job[],
+  selectedMonths?: { start: number; end?: number } // Optional month or range
+): SmallStatData[] => {
+  const monthIndexMap: Record<string, number> = {
+    January: 0,
+    February: 1,
+    March: 2,
+    April: 3,
+    May: 4,
+    June: 5,
+    July: 6,
+    August: 7,
+    September: 8,
+    October: 9,
+    November: 10,
+    December: 11,
+  };
 
-  const smallStatData = [
-    {
-      title: "Followers",
-      emoji: "👤",
-      number: followers,
-      description: "New followers this month",
-    },
-    {
-      title: "Applies",
-      emoji: "✉️",
-      number: applies,
-      description: "Job applications sent",
-    },
-    {
-      title: "Hires",
-      emoji: "✅",
-      number: hires,
-      description: "Positions filled",
-    },
+  const calculateMetrics = (
+    metricType: keyof Metrics,
+    months: number[]
+  ): { current: number; previous: number } => {
+    let currentTotal = 0;
+    let previousTotal = 0;
+
+    jobs.forEach((job) => {
+      job.metrics.forEach((metric) => {
+        const monthIndex = monthIndexMap[metric.month];
+        if (months.includes(monthIndex)) {
+          // Ensure that `metric[metricType]` is treated as a number
+          currentTotal +=
+            typeof metric[metricType] === "number"
+              ? (metric[metricType] as number)
+              : 0;
+        } else if (
+          selectedMonths &&
+          monthIndex >= selectedMonths.start - 1 &&
+          monthIndex <= (selectedMonths.end || selectedMonths.start - 1) - 1
+        ) {
+          previousTotal +=
+            typeof metric[metricType] === "number"
+              ? (metric[metricType] as number)
+              : 0;
+        }
+      });
+    });
+
+    return { current: currentTotal, previous: previousTotal };
+  };
+  let followers = { current: 0, previous: 0 };
+  let applies = { current: 0, previous: 0 };
+  let hires = { current: 0, previous: 0 };
+  if (selectedMonths) {
+    followers = calculateMetrics("followers", [selectedMonths.start]);
+    applies = calculateMetrics("applies", [selectedMonths.start]);
+    hires = calculateMetrics("hires", [selectedMonths.start]);
+  }
+
+  const createStatData = (
+    title: string,
+    emoji: string,
+    metric: { current: number; previous: number }
+  ): SmallStatData => ({
+    title,
+    emoji,
+    number: metric.current,
+    description: `${title} during selected period`,
+    changePercentage:
+      metric.previous > 0
+        ? Math.round(
+            ((metric.current - metric.previous) / metric.previous) * 100
+          )
+        : 0,
+  });
+
+  return [
+    createStatData("Followers", "👤", followers),
+    createStatData("Applies", "✉️", applies),
+    createStatData("Hires", "✅", hires),
   ];
-
-  console.log("📈 Processed Small Stats Data:", smallStatData);
-  return smallStatData;
 };
+
 // src/utils/processDataForPlots.ts
 export interface BestPerformingJobData {
   name: string;

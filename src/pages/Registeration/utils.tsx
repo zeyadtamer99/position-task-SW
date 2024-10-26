@@ -23,3 +23,13 @@ export const validatePassword = async (password: string): Promise<string> => {
   }
   return ""; // No errors
 };
+
+export const isEmailValid = (email: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
+// Type guard to check if error is FirebaseError
+export function isFirebaseError(error: unknown): error is { code: string } {
+  return typeof error === "object" && error !== null && "code" in error;
+}

@@ -1,34 +1,51 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Snackbar } from "@mui/material";
+import { Input, Button, Modal, Typography } from "antd";
 import {
   auth,
   facebookProvider,
   githubProvider,
   googleProvider,
 } from "../../../config/firebase";
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import {
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
 import { formContainerStyle } from "../../assets/global-styles";
 import SocialButtons from "./components/SocialButtons"; // Reusing SocialButtons
 import LoginForm from "./components/LoginForm";
-import { Typography } from "antd";
 import AuthHeader from "./components/AuthHeader";
 import loginIllustration from "../../assets/images/12.png";
 import { useTranslation } from "react-i18next";
+import { isEmailValid, isFirebaseError } from "./utils";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
-  const { t } = useTranslation();
-
-  const handleSnackbarClose = () => {
-    setSnackbarOpen(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [emailForReset, setEmailForReset] = useState("");
+  const [isSending, setIsSending] = useState(false); // Loading state for send reset link
+  const getFirebaseErrorMessage = (errorCode: string): string => {
+    const errorMessages: Record<string, string> = {
+      "auth/user-not-found": t("login.errors.userNotFound"),
+      "auth/wrong-password": t("login.errors.wrongPassword"),
+      "auth/email-already-in-use": t("login.errors.emailInUse"),
+      "auth/invalid-email": t("login.errors.invalidEmail"),
+      "auth/weak-password": t("login.errors.weakPassword"),
+      "auth/network-request-failed": t("login.errors.networkError"),
+      // Add more error mappings as needed
+    };
+    return errorMessages[errorCode] || t("login.errors.default");
   };
+  const handleSnackbarClose = () => setSnackbarOpen(false);
 
+  // Social login logic
   const handleSocialLogin = async (provider: string) => {
     let selectedProvider;
-
     switch (provider) {
       case "Google":
         selectedProvider = googleProvider;
@@ -55,16 +72,64 @@ const Login: React.FC = () => {
   };
 
   const handleFormLogin = async (email: string, password: string) => {
-    // Implement your login logic here (similar to sign-up)
-    try {
-      // Call a function to sign in the user
-      await signInWithEmailAndPassword(auth, email, password);
-      console.log("User logged in successfully");
-      navigate("/analytics");
-    } catch (error) {
-      console.error("Error during form login:", error);
-      setSnackbarMessage("Login failed. Please try again.");
+    if (!email || !password) {
+      setSnackbarMessage(t("login.errors.fillAllFields"));
       setSnackbarOpen(true);
+      return;
+    }
+
+    if (!isEmailValid(email)) {
+      setSnackbarMessage(t("login.errors.invalidEmail"));
+      setSnackbarOpen(true);
+      return;
+    }
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate("/analytics");
+    } catch (error: unknown) {
+      const errorMessage = isFirebaseError(error)
+        ? getFirebaseErrorMessage(error.code)
+        : t("login.errors.default"); // Fallback message for unknown errors
+      setSnackbarMessage(errorMessage);
+      setSnackbarOpen(true);
+    }
+  };
+
+  // Forgot Password handlers
+  const openForgotPasswordModal = () => setIsModalOpen(true);
+  const closeForgotPasswordModal = () => {
+    setIsModalOpen(false);
+    setEmailForReset(""); // Clear email input when closing
+  };
+
+  const handleSendResetLink = async () => {
+    if (!emailForReset) {
+      setSnackbarMessage(t("login.errors.enterEmailForReset"));
+      setSnackbarOpen(true);
+      return;
+    }
+
+    if (!isEmailValid(emailForReset)) {
+      setSnackbarMessage(t("login.errors.invalidEmail"));
+      setSnackbarOpen(true);
+      return;
+    }
+
+    setIsSending(true);
+    try {
+      await sendPasswordResetEmail(auth, emailForReset);
+      setSnackbarMessage(t("login.success.passwordResetSent"));
+      setSnackbarOpen(true);
+      closeForgotPasswordModal();
+    } catch (error: unknown) {
+      const errorMessage = isFirebaseError(error)
+        ? getFirebaseErrorMessage(error.code)
+        : t("login.errors.default"); // Fallback message for unknown errors
+      setSnackbarMessage(errorMessage);
+      setSnackbarOpen(true);
+    } finally {
+      setIsSending(false);
     }
   };
 
@@ -79,7 +144,6 @@ const Login: React.FC = () => {
     >
       {/* Header Section */}
       <AuthHeader subtitle={t("login.subtitle")} />
-      {/* Pass subtitle */}
       <Box
         sx={{
           display: "flex",
@@ -102,25 +166,9 @@ const Login: React.FC = () => {
             height: "100%",
           }}
         >
-          <LoginForm onSubmit={handleFormLogin} /> {/* Vertical Separator */}
-          <Box
-            sx={{
-              height: "100%",
-              width: "2px",
-              backgroundColor: "#fff",
-              mx: 2,
-            }}
-          />
-          {/* Social Buttons */}
-          <SocialButtons onSocialSignUp={handleSocialLogin} />
-          {/* Return to Sign Up Link */}
-          <Typography
-            style={{
-              marginTop: "16px",
-              textAlign: "center",
-              fontSize: "1.1rem",
-            }}
-          >
+          <LoginForm onSubmit={handleFormLogin} />
+          <SocialButtons onSocialSignUp={handleSocialLogin} mode="login" />
+          <Typography style={{ marginTop: "16px", fontSize: "1.1rem" }}>
             {t("login.newUser.text")}{" "}
             <strong
               style={{
@@ -133,6 +181,24 @@ const Login: React.FC = () => {
               {t("login.newUser.link")}
             </strong>
           </Typography>
+
+          <Button
+            variant="text"
+            color="primary"
+            onClick={openForgotPasswordModal}
+            style={{
+              backgroundColor: "transparent",
+              textDecoration: "underline",
+              color: "#5d47ff",
+              fontWeight: "bold",
+              padding: "8px 16px",
+              borderRadius: "20px",
+              transition: "background-color 0.3s, box-shadow 0.3s",
+              boxShadow: "0px 2px 8px rgba(93, 71, 255, 0.2)",
+            }}
+          >
+            {t("login.forgotPassword")}
+          </Button>
         </Box>
 
         {/* GIF Section */}
@@ -148,13 +214,40 @@ const Login: React.FC = () => {
           <img
             src={loginIllustration}
             alt="Login Illustration"
-            style={{
-              maxHeight: "80%",
-              maxWidth: "90%",
-            }}
+            style={{ maxHeight: "80%", maxWidth: "90%" }}
           />
         </Box>
       </Box>
+
+      {/* Forgot Password Modal */}
+      <Modal
+        title={t("login.forgotPasswordTitle")}
+        open={isModalOpen}
+        onCancel={closeForgotPasswordModal}
+        footer={[
+          <Button key="cancel" onClick={closeForgotPasswordModal}>
+            {t("actions.cancel")}
+          </Button>,
+          <Button
+            key="send"
+            type="primary"
+            onClick={handleSendResetLink}
+            loading={isSending} // Show loading effect on button
+          >
+            {t("actions.sendResetLink")}
+          </Button>,
+        ]}
+      >
+        <Typography>{t("login.enterEmailForReset")}</Typography>
+        <Input
+          type="email"
+          placeholder={t("login.emailPlaceholder")}
+          value={emailForReset}
+          onChange={(e) => setEmailForReset(e.target.value)}
+          style={{ marginTop: "12px", padding: "8px" }}
+        />
+      </Modal>
+
       {/* Snackbar for error messages */}
       <Snackbar
         open={snackbarOpen}
@@ -164,7 +257,9 @@ const Login: React.FC = () => {
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         ContentProps={{
           style: {
-            backgroundColor: "#f44336",
+            backgroundColor: snackbarMessage.includes("successfully")
+              ? "#4caf50" // Green for success messages
+              : "#f44336", // Red for error messages
             color: "#fff",
             borderRadius: "12px",
           },

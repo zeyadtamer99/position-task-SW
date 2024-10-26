@@ -9,10 +9,18 @@ import { useTranslation } from "react-i18next";
 
 interface SocialButtonsProps {
   onSocialSignUp: (provider: string) => void;
+  mode?: "signup" | "login"; // Add mode prop
 }
 
-const SocialButtons: React.FC<SocialButtonsProps> = ({ onSocialSignUp }) => {
+const SocialButtons: React.FC<SocialButtonsProps> = ({
+  onSocialSignUp,
+  mode = "signup",
+}) => {
   const { t } = useTranslation();
+
+  // Determine button text based on mode
+  const buttonText =
+    mode === "signup" ? t("social.signUpWith") : t("social.signInWith");
 
   return (
     <Box
@@ -26,50 +34,44 @@ const SocialButtons: React.FC<SocialButtonsProps> = ({ onSocialSignUp }) => {
       <Button
         variant="contained"
         sx={{
-          backgroundColor: "#1877f2", // Facebook color
+          backgroundColor: "#1877f2",
           color: "#fff",
           textTransform: "none",
-          "&:hover": {
-            backgroundColor: "#145db2", // Darker shade on hover
-          },
+          "&:hover": { backgroundColor: "#145db2" },
         }}
         fullWidth
         onClick={() => onSocialSignUp("Facebook")}
       >
         <FacebookOutlined style={{ fontSize: "1.5rem", marginRight: "8px" }} />
-        {t("social.signUpWithFacebook")}
+        {buttonText} Facebook
       </Button>
       <Button
         variant="contained"
         sx={{
-          backgroundColor: "#db4437", // Google color
+          backgroundColor: "#db4437",
           color: "#fff",
           textTransform: "none",
-          "&:hover": {
-            backgroundColor: "#b13628", // Darker shade on hover
-          },
+          "&:hover": { backgroundColor: "#b13628" },
         }}
         fullWidth
         onClick={() => onSocialSignUp("Google")}
       >
         <GoogleOutlined style={{ fontSize: "1.5rem", marginRight: "8px" }} />
-        {t("social.signUpWithGoogle")}
+        {buttonText} Google
       </Button>
       <Button
         variant="contained"
         sx={{
-          backgroundColor: "#333", // GitHub color
+          backgroundColor: "#333",
           color: "#fff",
           textTransform: "none",
-          "&:hover": {
-            backgroundColor: "#1a1a1a", // Darker shade on hover
-          },
+          "&:hover": { backgroundColor: "#1a1a1a" },
         }}
         fullWidth
         onClick={() => onSocialSignUp("GitHub")}
       >
         <GithubOutlined style={{ fontSize: "1.5rem", marginRight: "8px" }} />
-        {t("social.signUpWithGitHub")}
+        {buttonText} GitHub
       </Button>
     </Box>
   );

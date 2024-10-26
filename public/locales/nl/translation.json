@@ -1,5 +1,4 @@
-{
-    "general": {
+{"general": {
       "welcome": "Welkom bij de nieuwe app!",
       "login": "Inloggen",
       "signup": "Aanmelden"
@@ -10,10 +9,10 @@
       "addNewPlot": "+ Nieuwe grafiek toevoegen"
     },
     "titles": {
-      "savedJobs": "Opgeslagen vacatures",
+      "savedJobs": "Opgeslagen banen",
       "newVisits": "Nieuwe bezoeken",
       "overview": "Overzicht",
-      "bestPerformingJobs": "Best presterende vacatures",
+      "bestPerformingJobs": "Best presterende banen",
       "followers": "Volgers",
       "hires": "Aanwervingen",
       "applies": "Sollicitaties",
@@ -40,11 +39,12 @@
     },
     "dateRangePicker": {
       "selectMonthRange": "Selecteer maandbereik",
-      "warningMessage": "Als u 6 of meer maanden selecteert, kan er geen vergelijking worden gemaakt."
+      "warningMessage": "Als u 6 of meer maanden selecteert, kan de vergelijking niet worden berekend."
     },
     "actions": {
       "cancel": "Annuleren",
-      "confirm": "Bevestigen"
+      "confirm": "Bevestigen",
+      "sendResetLink": "Stuur resetlink"
     },
     "addPlot": {
       "title": "Laten we de gegevens bekijken",
@@ -72,34 +72,58 @@
     },
     "bestPerformingJobs": {
       "name": "Naam",
-      "performance": "Prestatie",
+      "performance": "Prestaties",
       "applied": "Toegepast"
     },
     "home": {
-      "subtitle": "SWIPE jezelf naar de baan die je echt wilt",
+      "subtitle": "Vind de baan die je echt wilt",
       "buttons": {
         "newUser": "Ik ben nieuw bij Swipework",
-        "existingUser": "Heb al een account"
+        "existingUser": "Ik heb al een account"
       }
     },
     "signup": {
       "subtitle": "Maak een account aan om te beginnen",
       "existingUser": {
         "text": "Heb je al een account?",
-        "link": "Terug naar Inloggen"
+        "link": "Terug naar inloggen"
+      },
+      "errors": {
+        "fillAllFields": "Vul alle velden in.",
+        "invalidEmail": "Voer een geldig e-mailadres in.",
+        "signUpFailed": "Registratie mislukt. Probeer het opnieuw."
       }
     },
     "login": {
       "subtitle": "Welkom terug! Log in op je account.",
       "newUser": {
-        "text": "Nog geen account?",
+        "text": "Heb je geen account?",
         "link": "Aanmelden"
+      },
+      "forgotPassword": "Wachtwoord vergeten?",
+      "forgotPasswordTitle": "Wachtwoord vergeten",
+      "enterEmailForReset": "Voer je e-mail in om een link voor het opnieuw instellen van je wachtwoord te ontvangen.",
+      "emailPlaceholder": "Voer je e-mailadres in",
+      "errors": {
+        "fillAllFields": "Vul alle velden in.",
+        "invalidEmail": "Voer een geldig e-mailadres in.",
+        "loginFailed": "Inloggen mislukt. Probeer het opnieuw.",
+        "enterEmailForReset": "Voer je e-mailadres in om je wachtwoord opnieuw in te stellen.",
+        "passwordResetFailed": "Fout bij het verzenden van het e-mailbericht voor het opnieuw instellen van het wachtwoord. Probeer het opnieuw."
+      },
+      "success": {
+        "passwordResetSent": "E-mail voor het opnieuw instellen van het wachtwoord succesvol verzonden."
       }
     },
     "social": {
+      "signUpWith": "Aanmelden met",
+      "signInWith": "Inloggen met",
       "signUpWithFacebook": "Aanmelden met Facebook",
       "signUpWithGoogle": "Aanmelden met Google",
-      "signUpWithGitHub": "Aanmelden met GitHub"
+      "signUpWithGitHub": "Aanmelden met GitHub",
+      "signInWithFacebook": "Inloggen met Facebook",
+      "signInWithGoogle": "Inloggen met Google",
+      "signInWithGitHub": "Inloggen met GitHub"
     },
     "form": {
       "fullName": "Volledige naam",
@@ -110,7 +134,7 @@
     },
     "analytics": {
       "title": "Laten we de gegevens bekijken",
-      "addPlot": "Nieuwe grafiek toevoegen"
+      "addPlot": "Voeg een nieuwe grafiek toe"
     },
     "signOutDialog": {
       "title": "Weet je zeker dat je wilt uitloggen?",
@@ -119,4 +143,3 @@
       "confirm": "Ja, uitloggen"
     }
   }
-  

@@ -48,7 +48,8 @@
   },
   "actions": {
     "cancel": "Cancel",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "sendResetLink": "Send Reset Link"
   },
   "addPlot": {
     "title": "Let's see the data",
@@ -79,47 +80,78 @@
     "performance": "Performance",
     "applied": "Applied"
   },
-    "home": {
-      "subtitle": "SWIPE yourself the job you really want",
-      "buttons": {
-        "newUser": "I'm new to Swipework",
-        "existingUser": "Already have an account"
-      }
-    },
-    "signup": {
-      "subtitle": "Create an account to get started",
-      "existingUser": {
-        "text": "Already have an account?",
-        "link": "Return to Login"
-      }
-    },
-    "login": {
-      "subtitle": "Welcome back! Please login to your account.",
-      "newUser": {
-        "text": "Don't have an account?",
-        "link": "Sign Up"
-      }
-    },
-    "social": {
-      "signUpWithFacebook": "Sign Up with Facebook",
-      "signUpWithGoogle": "Sign Up with Google",
-      "signUpWithGitHub": "Sign Up with GitHub"
-    },
-    "form": {
-      "fullName": "Full Name",
-      "emailAddress": "Email Address",
-      "password": "Password",
-      "signUp": "Sign Up",
-      "login": "Login"
-    },
-    "analytics": {
-      "title": "Let’s see the data",
-      "addPlot": "Add a new plot"
-    },
-    "signOutDialog": {
-      "title": "Are you sure you want to sign out?",
-      "message": "You will need to log in again to access your account.",
-      "cancel": "Cancel",
-      "confirm": "Yes, Sign Out"
+  "home": {
+    "subtitle": "SWIPE yourself the job you really want",
+    "buttons": {
+      "newUser": "I'm new to Swipework",
+      "existingUser": "Already have an account"
     }
-  }  
+  },
+  "signup": {
+    "subtitle": "Create an account to get started",
+    "existingUser": {
+      "text": "Already have an account?",
+      "link": "Return to Login"
+    },
+    "errors": {
+      "fillAllFields": "Please fill in all fields.",
+      "invalidEmail": "Please enter a valid email address.",
+      "signUpFailed": "Sign-up failed. Please try again."
+    }
+  },
+  "login": {
+    "subtitle": "Welcome back! Please login to your account.",
+    "newUser": {
+      "text": "Don't have an account?",
+      "link": "Sign Up"
+    },
+  
+    "forgotPassword": "Forgot Password?",
+    "forgotPasswordTitle": "Forgot Password",
+    "enterEmailForReset": "Enter your email to receive a password reset link.",
+    "emailPlaceholder": "Enter your email",
+    "errors": {
+      "fillAllFields": "Please fill in all fields.",
+      "invalidEmail": "Please enter a valid email address.",
+      "loginFailed": "Login failed. Please try again.",
+      "enterEmailForReset": "Please enter your email for password reset.",
+      "passwordResetFailed": "Failed to send password reset email. Please try again.",
+      "userNotFound": "User not found. Please check your email.",
+      "wrongPassword": "Incorrect password. Please try again.",
+      "emailInUse": "This email is already in use. Please use a different email.",
+      "weakPassword": "Password is too weak.",
+      "networkError": "Network error. Please check your connection.",
+      "default": "An error occurred. Please try again."
+    },
+    "success": {
+      "passwordResetSent": "Password reset email sent successfully."
+    }
+  },
+  "social": {
+    "signUpWith": "Sign Up with",
+    "signInWith": "Sign In with",
+    "signUpWithFacebook": "Sign Up with Facebook",
+    "signUpWithGoogle": "Sign Up with Google",
+    "signUpWithGitHub": "Sign Up with GitHub",
+    "signInWithFacebook": "Sign In with Facebook",
+    "signInWithGoogle": "Sign In with Google",
+    "signInWithGitHub": "Sign In with GitHub"
+  },
+  "form": {
+    "fullName": "Full Name",
+    "emailAddress": "Email Address",
+    "password": "Password",
+    "signUp": "Sign Up",
+    "login": "Login"
+  },
+  "analytics": {
+    "title": "Let’s see the data",
+    "addPlot": "Add a new plot"
+  },
+  "signOutDialog": {
+    "title": "Are you sure you want to sign out?",
+    "message": "You will need to log in again to access your account.",
+    "cancel": "Cancel",
+    "confirm": "Yes, Sign Out"
+  }
+}

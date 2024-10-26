@@ -12,7 +12,7 @@ import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { formContainerStyle } from "../../assets/global-styles";
 import SignUpForm from "./components/SignUpForm";
 import SocialButtons from "./components/SocialButtons";
-import { validatePassword } from "./utils";
+import { isEmailValid, validatePassword } from "./utils";
 import { Typography } from "antd";
 import AuthHeader from "./components/AuthHeader";
 import signupIllustration from "../../assets/images/2.png";
@@ -61,14 +61,19 @@ const SignUp: React.FC = () => {
     email: string,
     password: string
   ) => {
-    // Validate input
+    // Validate input fields
     if (!fullName || !email || !password) {
-      setSnackbarMessage("Please fill in all fields.");
+      setSnackbarMessage(t("signup.errors.fillAllFields"));
       setSnackbarOpen(true);
       return;
     }
 
-    // Await the validation if it is an async function
+    if (!isEmailValid(email)) {
+      setSnackbarMessage(t("signup.errors.invalidEmail"));
+      setSnackbarOpen(true);
+      return;
+    }
+
     const validationError = await validatePassword(password);
     if (validationError) {
       setSnackbarMessage(validationError);
@@ -86,7 +91,7 @@ const SignUp: React.FC = () => {
       navigate("/analytics");
     } catch (error) {
       console.error("Error during form sign-up:", error);
-      setSnackbarMessage("Sign-up failed. Please try again.");
+      setSnackbarMessage(t("signup.errors.signUpFailed"));
       setSnackbarOpen(true);
     }
   };

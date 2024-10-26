@@ -30,7 +30,7 @@
     },
     "tableHeaders": {
       "name": "Nombre",
-      "performance": "Desempeño",
+      "performance": "Rendimiento",
       "applied": "Aplicado"
     },
     "timeRanges": {
@@ -44,7 +44,8 @@
     },
     "actions": {
       "cancel": "Cancelar",
-      "confirm": "Confirmar"
+      "confirm": "Confirmar",
+      "sendResetLink": "Enviar enlace de restablecimiento"
     },
     "addPlot": {
       "title": "Veamos los datos",
@@ -72,7 +73,7 @@
     },
     "bestPerformingJobs": {
       "name": "Nombre",
-      "performance": "Desempeño",
+      "performance": "Rendimiento",
       "applied": "Aplicado"
     },
     "home": {
@@ -83,10 +84,15 @@
       }
     },
     "signup": {
-      "subtitle": "Crea una cuenta para comenzar",
+      "subtitle": "Crea una cuenta para empezar",
       "existingUser": {
         "text": "¿Ya tienes una cuenta?",
-        "link": "Volver a Iniciar Sesión"
+        "link": "Volver a iniciar sesión"
+      },
+      "errors": {
+        "fillAllFields": "Por favor, completa todos los campos.",
+        "invalidEmail": "Por favor, introduce una dirección de correo válida.",
+        "signUpFailed": "Fallo en el registro. Inténtalo de nuevo."
       }
     },
     "login": {
@@ -94,29 +100,47 @@
       "newUser": {
         "text": "¿No tienes una cuenta?",
         "link": "Regístrate"
+      },
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "forgotPasswordTitle": "Olvidé mi contraseña",
+      "enterEmailForReset": "Introduce tu correo para recibir un enlace de restablecimiento de contraseña.",
+      "emailPlaceholder": "Introduce tu correo",
+      "errors": {
+        "fillAllFields": "Por favor, completa todos los campos.",
+        "invalidEmail": "Por favor, introduce una dirección de correo válida.",
+        "loginFailed": "Fallo en el inicio de sesión. Inténtalo de nuevo.",
+        "enterEmailForReset": "Por favor, introduce tu correo para restablecer la contraseña.",
+        "passwordResetFailed": "Error al enviar el correo de restablecimiento de contraseña. Inténtalo de nuevo."
+      },
+      "success": {
+        "passwordResetSent": "Correo de restablecimiento de contraseña enviado con éxito."
       }
     },
     "social": {
-      "signUpWithFacebook": "Registrarse con Facebook",
-      "signUpWithGoogle": "Registrarse con Google",
-      "signUpWithGitHub": "Registrarse con GitHub"
-    },
+        "signUpWith": "Regístrate con",
+        "signInWith": "Inicia sesión con",
+        "signUpWithFacebook": "Regístrate con Facebook",
+        "signUpWithGoogle": "Regístrate con Google",
+        "signUpWithGitHub": "Regístrate con GitHub",
+        "signInWithFacebook": "Inicia sesión con Facebook",
+        "signInWithGoogle": "Inicia sesión con Google",
+        "signInWithGitHub": "Inicia sesión con GitHub"
+      },
     "form": {
-      "fullName": "Nombre Completo",
-      "emailAddress": "Correo Electrónico",
+      "fullName": "Nombre completo",
+      "emailAddress": "Correo electrónico",
       "password": "Contraseña",
       "signUp": "Registrarse",
-      "login": "Iniciar Sesión"
+      "login": "Iniciar sesión"
     },
     "analytics": {
-      "title": "Veamos los datos",
+      "title": "Vamos a ver los datos",
       "addPlot": "Agregar un nuevo gráfico"
     },
     "signOutDialog": {
       "title": "¿Estás seguro de que deseas cerrar sesión?",
       "message": "Necesitarás iniciar sesión nuevamente para acceder a tu cuenta.",
       "cancel": "Cancelar",
-      "confirm": "Sí, Cerrar Sesión"
+      "confirm": "Sí, cerrar sesión"
     }
-  }
-  
+}

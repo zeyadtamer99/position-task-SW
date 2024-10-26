@@ -157,7 +157,7 @@ const SmallStatPlot: React.FC<SmallStatPlotProps> = ({
           {count}
         </Typography>
         <Typography variant="body2" sx={{ textAlign: "center" }}>
-          {t(`subtitles.${description}`)} {/* Translate description */}
+          {description}
         </Typography>
         {changePercentage !== undefined && (
           <Typography

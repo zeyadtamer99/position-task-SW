@@ -54,16 +54,24 @@ const AnalyticsPage: React.FC = () => {
     BestPerformingJobData[]
   >([]);
   const { t } = useTranslation();
-  const translatedDescriptions = {
+  const [translatedDescriptions, setTranslatedDescriptions] = useState({
     Followers: t("subtitles.FollowersPeriod"),
     Applies: t("subtitles.AppliesPeriod"),
     Hires: t("subtitles.HiresPeriod"),
-  };
+  });
 
   useEffect(() => {
     document.title = "Analytics Page";
   }, []);
 
+  // Update translated descriptions when language changes
+  useEffect(() => {
+    setTranslatedDescriptions({
+      Followers: t("subtitles.FollowersPeriod"),
+      Applies: t("subtitles.AppliesPeriod"),
+      Hires: t("subtitles.HiresPeriod"),
+    });
+  }, [t]);
   useEffect(() => {
     const loadData = async () => {
       console.log("🚀 Fetching jobs data from Firestore...");

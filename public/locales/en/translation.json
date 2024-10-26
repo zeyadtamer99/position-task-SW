@@ -24,13 +24,9 @@
   "subtitles": {
     "savedJobs": "Total saves based on selected period",
     "newVisits": "Visits to your jobs based on selected period",
-    "subtitles": {
-    "savedJobs": "Total saves based on selected period",
-    "newVisits": "Visits to your jobs based on selected period",
     "FollowersPeriod": "Followers during selected period",
     "HiresPeriod": "Hires during selected period",
     "AppliesPeriod": "Applies during selected period"
-  }
   },
   "tableHeaders": {
     "name": "Name",

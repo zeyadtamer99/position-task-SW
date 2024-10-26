@@ -76,38 +76,58 @@ const monthIndexMap: Record<string, number> = {
 };
 
 /**
- * Calculates the current month's data for a specified metric type.
+ * Calculates data for a specified metric type over a given range.
  * @param jobs - Array of Job data.
  * @param metricType - The metric type (e.g., "views", "clicks").
- * @returns The total metric count for the current month.
+ * @param range - Optional range of months to filter by.
+ * @returns The total metric count for the specified range.
  */
 export const calculateCurrentMonthData = (
   jobs: Job[],
-  metricType: keyof Metrics
+  metricType: keyof Metrics,
+  range?: { start: number; end?: number }
 ): { count: number } => {
   const currentMonth = new Date().getMonth();
+  const startMonth = range?.start ?? currentMonth;
+  const endMonth = range?.end ?? currentMonth;
+
   const currentMonthData = jobs.reduce((total, job) => {
-    const monthMetric = job.metrics.find(
-      (metric) => monthIndexMap[metric.month] === currentMonth
+    const monthMetrics = job.metrics.filter((metric) => {
+      const monthIndex = monthIndexMap[metric.month];
+      // Check if the metric falls within the specified range
+      return monthIndex >= startMonth && monthIndex <= endMonth;
+    });
+
+    return (
+      total +
+      monthMetrics.reduce(
+        (sum, metric) => sum + (metric[metricType] as number),
+        0
+      )
     );
-    return monthMetric ? total + (monthMetric[metricType] as number) : total;
   }, 0);
 
   return { count: currentMonthData };
 };
-
 /**
- * Calculates the percentage change of the metric between the current and previous month.
+ * Calculates the percentage change of the metric over the specified range compared to the previous range.
  * @param jobs - Array of Job data.
  * @param metricType - The metric type (e.g., "views", "clicks").
- * @returns The percentage change from the previous month.
+ * @param range - Optional range of months to filter by.
+ * @returns The percentage change from the previous range.
  */
 export const calculatePreviousMonthComparison = (
   jobs: Job[],
-  metricType: keyof Metrics
+  metricType: keyof Metrics,
+  range?: { start: number; end?: number }
 ): { changePercentage: number } => {
   const currentMonth = new Date().getMonth();
-  const previousMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+  const startMonth = range?.start ?? currentMonth;
+  const endMonth = range?.end ?? currentMonth;
+
+  // Calculate previous range: if startMonth is January (0), wrap around to December (11)
+  const previousStartMonth = startMonth === 0 ? 11 : startMonth - 1;
+  const previousEndMonth = endMonth === 0 ? 11 : endMonth - 1;
 
   let currentTotal = 0;
   let previousTotal = 0;
@@ -115,9 +135,13 @@ export const calculatePreviousMonthComparison = (
   jobs.forEach((job) => {
     job.metrics.forEach((metric) => {
       const monthIndex = monthIndexMap[metric.month];
-      if (monthIndex === currentMonth) {
+
+      // Sum metrics within the specified range
+      if (monthIndex >= startMonth && monthIndex <= endMonth) {
         currentTotal += metric[metricType] as number;
-      } else if (monthIndex === previousMonth) {
+      }
+      // Sum metrics within the previous range
+      if (monthIndex >= previousStartMonth && monthIndex <= previousEndMonth) {
         previousTotal += metric[metricType] as number;
       }
     });

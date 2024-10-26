@@ -7,6 +7,7 @@ import {
   DialogContent,
   Button,
   Typography,
+  Box,
 } from "@mui/material";
 import { DatePicker, Popover } from "antd";
 import { ExclamationCircleOutlined, CalendarOutlined } from "@ant-design/icons";
@@ -44,7 +45,7 @@ const MonthRangePicker: React.FC<MonthRangePickerProps> = ({
   useEffect(() => {
     if (range[0] && range[1]) {
       const monthDifference = range[1].diff(range[0], "month");
-      setShowWarning(monthDifference > 5);
+      setShowWarning(monthDifference >= 5);
     } else {
       setShowWarning(false);
     }
@@ -54,7 +55,7 @@ const MonthRangePicker: React.FC<MonthRangePickerProps> = ({
     <Dialog
       open={open}
       onClose={onClose}
-      sx={{ borderRadius: 2, zIndex: "99" }}
+      sx={{ borderRadius: "10px", zIndex: "99" }}
     >
       <DialogTitle
         sx={{ display: "flex", alignItems: "center", gap: 1, zIndex: "88" }}
@@ -67,17 +68,17 @@ const MonthRangePicker: React.FC<MonthRangePickerProps> = ({
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          width: "fit-content",
           gap: 2,
           padding: 3,
-          backgroundColor: "#f9f9f9",
-          borderRadius: "12px",
+          borderRadius: "16px",
           zIndex: "77",
         }}
       >
         <RangePicker
           picker="month"
           value={range}
-          onChange={(value) => setRange(value)}
+          onChange={(value) => setRange(value ?? [null, null])}
           style={{ width: "100%", zIndex: "66" }}
         />
 
@@ -85,18 +86,23 @@ const MonthRangePicker: React.FC<MonthRangePickerProps> = ({
           <Popover
             content={
               <Typography color="warning.main">
-                <ExclamationCircleOutlined /> If selecting more than 6 months,
-                comparison will be done for the same year.
+                <ExclamationCircleOutlined /> If selecting 6 or more months,
+                comparison can't be calculated.
               </Typography>
             }
             title="Warning"
           >
-            <ExclamationCircleOutlined
-              style={{ color: "#faad14", fontSize: "1.5rem" }}
-            />
-            <Typography color="warning.main" sx={{ marginLeft: 1 }}>
-              Range exceeds 6 months.
-            </Typography>
+            <Box sx={{ display: "flex", flexDirection: "row" }}>
+              <ExclamationCircleOutlined
+                style={{ color: "#faad14", fontSize: "1.25rem" }}
+              />
+              <Typography
+                color="warning.main"
+                sx={{ marginLeft: 1, fontSize: "1rem" }}
+              >
+                Range exceeds 6 months.
+              </Typography>
+            </Box>
           </Popover>
         )}
       </DialogContent>

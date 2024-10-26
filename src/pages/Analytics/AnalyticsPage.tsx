@@ -41,7 +41,6 @@ const AnalyticsPage: React.FC = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [hoveredPlotIndex, setHoveredPlotIndex] = useState<number | null>(null);
   const [jobs, setJobs] = useState<Job[]>([]);
-  // Data states for each plot
   const [overviewData, setOverviewData] = useState<OverviewData | null>(null);
   const [newVisitsData, setNewVisitsData] = useState<NewVisitsData | null>(
     null
@@ -60,7 +59,6 @@ const AnalyticsPage: React.FC = () => {
       const fetchedJobs = await fetchJobsFromFirebase();
       setJobs(fetchedJobs);
       if (fetchedJobs) {
-        // Process and set data for each plot
         setOverviewData(processOverviewData(fetchedJobs));
         setNewVisitsData(processNewVisitsData(fetchedJobs));
         setSavedJobsData(processSavedJobsData(fetchedJobs));
@@ -71,6 +69,7 @@ const AnalyticsPage: React.FC = () => {
 
     loadData();
   }, []);
+
   const handleAddPlot = (plotType: string) => {
     setPlots([...plots, plotType]);
     setModalOpen(false);
@@ -78,6 +77,14 @@ const AnalyticsPage: React.FC = () => {
 
   const handleRemovePlot = (plotType: string) => {
     setPlots(plots.filter((plot) => plot !== plotType));
+  };
+
+  const handleMonthRangeChange = (
+    plotType: string,
+    range: { start: number; end?: number }
+  ) => {
+    const updatedData = processSmallStatData(jobs, range);
+    setSmallStatData(updatedData);
   };
 
   const renderPlotComponent = (plotType: string) => {
@@ -90,8 +97,6 @@ const AnalyticsPage: React.FC = () => {
         return <SavedJobsPlot data={savedJobsData} />;
       case "Best Performing Jobs":
         return <BestPerformingJobsPlot data={bestJobData} />;
-
-      // Render SmallStatPlots for Followers, Applies, and Hires
       case "Followers":
       case "Applies":
       case "Hires": {
@@ -104,29 +109,23 @@ const AnalyticsPage: React.FC = () => {
               jobs={jobs}
               description={statData.description}
               changePercentage={statData.changePercentage}
-              onMonthRangeChange={handleMonthRangeChange}
+              onMonthRangeChange={(range) =>
+                handleMonthRangeChange(plotType, range)
+              }
             />
           );
         }
         return null;
       }
-
       default:
         console.warn(`Unknown plot type: ${plotType}`);
         return null;
     }
   };
 
-  const handleMonthRangeChange = (range: { start: number; end?: number }) => {
-    const updatedData = processSmallStatData(jobs, range);
-    setSmallStatData(updatedData);
-  };
-
-  // Inside AnalyticsPage component
   const renderPlot = (plotType: string, index: number) => {
     const previousPlotType = index > 0 ? plots[index - 1] : null;
     const nextPlotType = index < plots.length - 1 ? plots[index + 1] : null;
-
     const plotWidth = getPlotWidth(plotType, previousPlotType, nextPlotType);
     const isSideBySide = plotWidth === "50%";
 
@@ -176,7 +175,6 @@ const AnalyticsPage: React.FC = () => {
       }}
     >
       <Sidebar />
-
       <Box
         sx={{
           width: "100%",
@@ -206,7 +204,7 @@ const AnalyticsPage: React.FC = () => {
                   plots.length > 0
                     ? getResponsiveHeight(plots[plots.length - 1], null, null)
                     : { xs: "300px", sm: "400px", md: "500px" }
-                } // Use responsive height of the last plot, or default values if no plots exist
+                }
               />
             </Box>
           )}

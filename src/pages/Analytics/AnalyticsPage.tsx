@@ -11,7 +11,7 @@ import Sidebar from "../../components/Sidebar";
 import { CloseOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { getPlotWidth } from "./utils";
-import { fetchJobsFromFirebase } from "../../utils/firebaseFetch";
+import { fetchJobsFromFirebase } from "../../firebase/firebaseFetch";
 import {
   BestPerformingJobData,
   NewVisitsData,
@@ -59,6 +59,10 @@ const AnalyticsPage: React.FC = () => {
     Applies: t("subtitles.AppliesPeriod"),
     Hires: t("subtitles.HiresPeriod"),
   };
+
+  useEffect(() => {
+    document.title = "Analytics Page";
+  }, []);
 
   useEffect(() => {
     const loadData = async () => {

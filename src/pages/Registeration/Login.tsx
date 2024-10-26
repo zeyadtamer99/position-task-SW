@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+// src/pages/Login.tsx
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Snackbar } from "@mui/material";
 import { Input, Button, Modal, Typography } from "antd";
@@ -7,14 +8,19 @@ import {
   facebookProvider,
   githubProvider,
   googleProvider,
-} from "../../services/firebase";
+} from "../../firebase/firebase";
 import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
-import { formContainerStyle } from "../../assets/global-styles";
-import SocialButtons from "./components/SocialButtons"; // Reusing SocialButtons
+import {
+  authContainerStyle,
+  innerBoxStyle,
+  formSectionStyle,
+  linkStyle,
+} from "../../assets/global-styles";
+import SocialButtons from "./components/SocialButtons";
 import LoginForm from "./components/LoginForm";
 import AuthHeader from "./components/AuthHeader";
 import loginIllustration from "../../assets/images/12.png";
@@ -29,6 +35,11 @@ const Login: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [emailForReset, setEmailForReset] = useState("");
   const [isSending, setIsSending] = useState(false); // Loading state for send reset link
+
+  useEffect(() => {
+    document.title = "Sign In - SwipeWork";
+  }, []);
+
   const getFirebaseErrorMessage = (errorCode: string): string => {
     const errorMessages: Record<string, string> = {
       "auth/user-not-found": t("login.errors.userNotFound"),
@@ -100,7 +111,7 @@ const Login: React.FC = () => {
   const openForgotPasswordModal = () => setIsModalOpen(true);
   const closeForgotPasswordModal = () => {
     setIsModalOpen(false);
-    setEmailForReset(""); // Clear email input when closing
+    setEmailForReset("");
   };
 
   const handleSendResetLink = async () => {
@@ -125,7 +136,7 @@ const Login: React.FC = () => {
     } catch (error: unknown) {
       const errorMessage = isFirebaseError(error)
         ? getFirebaseErrorMessage(error.code)
-        : t("login.errors.default"); // Fallback message for unknown errors
+        : t("login.errors.default");
       setSnackbarMessage(errorMessage);
       setSnackbarOpen(true);
     } finally {
@@ -134,66 +145,29 @@ const Login: React.FC = () => {
   };
 
   return (
-    <Box
-      sx={{
-        ...formContainerStyle("blue"),
-        display: "flex",
-        flexDirection: "column",
-        minHeight: "100vh",
-      }}
-    >
-      {/* Header Section */}
+    <Box sx={authContainerStyle}>
       <AuthHeader subtitle={t("login.subtitle")} />
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "stretch",
-          justifyContent: "center",
-          textAlign: "center",
-          width: "100%",
-        }}
-      >
-        {/* Form Section */}
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            textAlign: "center",
-            width: { xs: "100%", md: "50%" },
-            height: "100%",
-          }}
-        >
+      <Box sx={innerBoxStyle}>
+        <Box sx={formSectionStyle}>
           <LoginForm onSubmit={handleFormLogin} />
           <SocialButtons onSocialSignUp={handleSocialLogin} mode="login" />
           <Typography
-            style={{ marginTop: "16px", fontSize: "1.1rem", color: "white" }}
+            style={{ marginTop: 32, fontSize: "1.1rem", color: "white" }}
           >
             {t("login.newUser.text")}{" "}
-            <strong
-              style={{
-                color: "#ff9c8a",
-                cursor: "pointer",
-                textDecoration: "underline",
-              }}
-              onClick={() => navigate("/signup")}
-            >
+            <strong style={linkStyle} onClick={() => navigate("/signup")}>
               {t("login.newUser.link")}
             </strong>
           </Typography>
-
           <Button
             variant="solid"
             color="primary"
             onClick={openForgotPasswordModal}
             style={{
-              marginTop: "12px",
+              marginTop: 12,
               color: "#ffffff",
-              padding: "8px 16px",
+              padding: 12,
               borderRadius: "12px",
-              transition: "background-color 0.3s, box-shadow 0.3s",
               boxShadow: "0px 2px 8px rgba(93, 71, 255, 0.2)",
             }}
           >
@@ -232,7 +206,7 @@ const Login: React.FC = () => {
             key="send"
             type="primary"
             onClick={handleSendResetLink}
-            loading={isSending} // Show loading effect on button
+            loading={isSending}
           >
             {t("actions.sendResetLink")}
           </Button>,
@@ -258,8 +232,8 @@ const Login: React.FC = () => {
         ContentProps={{
           style: {
             backgroundColor: snackbarMessage.includes("successfully")
-              ? "#4caf50" // Green for success messages
-              : "#f44336", // Red for error messages
+              ? "#4caf50"
+              : "#f44336",
             color: "#fff",
             borderRadius: "12px",
           },

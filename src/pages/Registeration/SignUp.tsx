@@ -1,5 +1,5 @@
 // src/pages/SignUp.tsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Snackbar } from "@mui/material";
 import {
@@ -7,9 +7,15 @@ import {
   facebookProvider,
   githubProvider,
   googleProvider,
-} from "../../services/firebase";
+} from "../../firebase/firebase";
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { formContainerStyle } from "../../assets/global-styles";
+import {
+  authContainerStyle,
+  innerBoxStyle,
+  formSectionStyle,
+  separatorStyle,
+  linkStyle,
+} from "../../assets/global-styles";
 import SignUpForm from "./components/SignUpForm";
 import SocialButtons from "./components/SocialButtons";
 import { isEmailValid, validatePassword } from "./utils";
@@ -24,13 +30,16 @@ const SignUp: React.FC = () => {
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const { t } = useTranslation();
 
+  useEffect(() => {
+    document.title = "Sign Up - SwipeWork";
+  }, []);
+
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
   };
 
   const handleSocialSignUp = async (provider: string) => {
     let selectedProvider;
-
     switch (provider) {
       case "Google":
         selectedProvider = googleProvider;
@@ -61,7 +70,6 @@ const SignUp: React.FC = () => {
     email: string,
     password: string
   ) => {
-    // Validate input fields
     if (!fullName || !email || !password) {
       setSnackbarMessage(t("signup.errors.fillAllFields"));
       setSnackbarOpen(true);
@@ -97,98 +105,36 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <Box
-      sx={{
-        ...formContainerStyle("blue"),
-        display: "flex",
-        flexDirection: "column",
-        minHeight: "100vh",
-      }}
-    >
-      {/* Header Section */}
+    <Box sx={authContainerStyle}>
       <AuthHeader subtitle={t("signup.subtitle")} />
-
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row", // Ensure the parent box is in row direction
-          alignItems: "stretch", // Make children stretch to fill the height
-          justifyContent: "center",
-          textAlign: "center",
-          width: "100%",
-        }}
-      >
-        {/* Form Section */}
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            textAlign: "center",
-            width: { xs: "100%", md: "50%" },
-            height: "100%", // Take full height of the parent
-          }}
-        >
+      <Box sx={innerBoxStyle}>
+        <Box sx={formSectionStyle}>
           <SignUpForm onSubmit={handleFormSignUp} />
-
-          {/* Vertical Separator */}
-          <Box
-            sx={{
-              height: "100%", // Match the height of the parent
-              width: "2px",
-              backgroundColor: "#fff",
-              mx: 2,
-            }}
-          />
-
-          {/* Social Buttons */}
+          <Box sx={separatorStyle} />
           <SocialButtons onSocialSignUp={handleSocialSignUp} />
-
-          {/* Return to Login Link */}
-          <Typography
-            style={{
-              marginTop: "16px",
-              textAlign: "center",
-              fontSize: "1.1rem", // Slightly larger font size
-            }}
-          >
+          <Typography style={{ marginTop: 2, fontSize: "1.1rem" }}>
             {t("signup.existingUser.text")}{" "}
-            <strong
-              style={{
-                color: "#ff9c8a", // Color for the link
-                cursor: "pointer",
-                textDecoration: "underline", // Underline for better indication
-              }}
-              onClick={() => navigate("/login")}
-            >
+            <strong style={linkStyle} onClick={() => navigate("/login")}>
               {t("signup.existingUser.link")}
             </strong>
           </Typography>
         </Box>
-
-        {/* GIF Section */}
         <Box
           sx={{
-            display: { xs: "none", md: "flex" }, // Hide on small screens
-            width: "50vw", // Right side takes half of the width
+            display: { xs: "none", md: "flex" },
+            width: "50vw",
             justifyContent: "center",
             alignItems: "center",
-            height: "90%", // Ensure it takes the full height
+            height: "90%",
           }}
         >
           <img
             src={signupIllustration}
             alt="Signup Illustration"
-            style={{
-              maxHeight: "80%",
-              maxWidth: "90%",
-            }}
+            style={{ maxHeight: "80%", maxWidth: "90%" }}
           />
         </Box>
       </Box>
-
-      {/* Snackbar for error messages */}
       <Snackbar
         open={snackbarOpen}
         autoHideDuration={6000}

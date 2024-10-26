@@ -105,3 +105,43 @@ export const tableDataTitleTypography = {
   textAlign: "left",
   fontFamily: "Poppins",
 };
+
+// Common styles for form containers
+export const authContainerStyle = {
+  ...formContainerStyle("blue"),
+  display: "flex",
+  flexDirection: "column",
+  minHeight: "100vh",
+};
+
+export const innerBoxStyle = {
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "stretch",
+  justifyContent: "center",
+  textAlign: "center",
+  width: "100%",
+};
+
+export const formSectionStyle = {
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  textAlign: "center",
+  width: { xs: "100%", md: "50%" },
+  height: "100%",
+};
+
+export const separatorStyle = {
+  height: "100%",
+  width: "2px",
+  backgroundColor: "#fff",
+  mx: 2,
+};
+
+export const linkStyle = {
+  color: "#ff9c8a",
+  cursor: "pointer",
+  textDecoration: "underline",
+};

@@ -1,3 +1,4 @@
+//E:\ReactCV\position-task\src\components\Sidebar.tsx
 import React, { useState } from "react";
 import {
   Box,
@@ -16,7 +17,7 @@ import { keyframes } from "@emotion/react";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { LogoutOutlined } from "@ant-design/icons"; // Import the signout icon
-import { auth } from "../services/firebase";
+import { auth } from "../firebase/firebase";
 
 const Sidebar: React.FC = () => {
   const { i18n } = useTranslation();

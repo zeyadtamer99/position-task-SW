@@ -17,7 +17,7 @@ const AuthHeader: React.FC<AuthHeaderProps> = ({ subtitle }) => {
         textAlign: "center",
         width: { xs: "100%", md: "50%" },
         px: { xs: 2, md: 4 },
-        mb: 4,
+        mb: 16,
       }}
     >
       <img

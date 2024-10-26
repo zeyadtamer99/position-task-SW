@@ -1,6 +1,7 @@
+//src\utils\firebaseFetch.ts
 import { collection, getDocs } from "firebase/firestore";
 import { Job, Metrics } from "../models/Job";
-import { db } from "../services/firebase";
+import { db } from "./firebase";
 
 export const fetchJobsFromFirebase = async (): Promise<Job[]> => {
   console.log("🚀 Starting to fetch jobs from Firebase...");

@@ -6,12 +6,13 @@ import Login from "./pages/Registeration/Login";
 import SignUp from "./pages/Registeration/SignUp";
 import SplashScreen from "./pages/SplashScreen";
 import AnalyticsPage from "./pages/Analytics/AnalyticsPage";
-import "./utils/i18n";
+import ErrorPage from "./global/ErrorPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useAuth } from "./hooks/useAuth";
+import "./utils/i18n";
 
 function App() {
-  const isAuthenticated = useAuth(); // Check authentication status
+  const isAuthenticated = useAuth();
 
   return (
     <ThemeProvider theme={theme}>
@@ -29,6 +30,10 @@ function App() {
                 element={<AnalyticsPage />}
               />
             }
+          />
+          <Route
+            path="*"
+            element={<ErrorPage errorMessage="Page not found." />}
           />
         </Routes>
       </Router>

@@ -7,8 +7,8 @@ import SignUp from "./pages/Registeration/SignUp";
 import SplashScreen from "./pages/SplashScreen";
 import AnalyticsPage from "./pages/Analytics/AnalyticsPage";
 import "./utils/i18n";
-import ProtectedRoute from "./utils/ProtectedRoute";
-import { useAuth } from "./utils/useAuth";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { useAuth } from "./hooks/useAuth";
 
 function App() {
   const isAuthenticated = useAuth(); // Check authentication status

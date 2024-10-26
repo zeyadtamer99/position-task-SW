@@ -14,9 +14,9 @@ import { FlagIcon, FlagIconCode } from "react-flag-kit";
 import logo from "../../src/assets/images/swipework_logo.jpg";
 import { keyframes } from "@emotion/react";
 import { signOut } from "firebase/auth";
-import { auth } from "../../config/firebase";
 import { useNavigate } from "react-router-dom";
 import { LogoutOutlined } from "@ant-design/icons"; // Import the signout icon
+import { auth } from "../services/firebase";
 
 const Sidebar: React.FC = () => {
   const { i18n } = useTranslation();

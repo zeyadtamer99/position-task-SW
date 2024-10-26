@@ -7,7 +7,7 @@ import {
   facebookProvider,
   githubProvider,
   googleProvider,
-} from "../../../config/firebase";
+} from "../../services/firebase";
 import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,

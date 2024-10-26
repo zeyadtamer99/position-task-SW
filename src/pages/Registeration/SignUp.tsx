@@ -7,7 +7,7 @@ import {
   facebookProvider,
   githubProvider,
   googleProvider,
-} from "../../../config/firebase";
+} from "../../services/firebase";
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { formContainerStyle } from "../../assets/global-styles";
 import SignUpForm from "./components/SignUpForm";

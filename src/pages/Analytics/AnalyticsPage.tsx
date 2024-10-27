@@ -13,19 +13,21 @@ import { Button } from "antd";
 import { getPlotWidth } from "./utils";
 import { fetchJobsFromFirebase } from "../../firebase/firebaseFetch";
 import {
-  BestPerformingJobData,
-  NewVisitsData,
-  OverviewData,
   processBestPerformingJobsData,
   processNewVisitsData,
   processOverviewData,
   processSavedJobsData,
   processSmallStatData,
-  SavedJobsData,
-  SmallStatData,
 } from "../../utils/dataProcessor";
 import { Job } from "../../models/Job";
 import { useTranslation } from "react-i18next";
+import {
+  BestPerformingJobData,
+  NewVisitsData,
+  OverviewData,
+  SavedJobsData,
+  SmallStatData,
+} from "../../models/Interfaces";
 
 const plotTypes = [
   "Overview",

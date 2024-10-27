@@ -5,8 +5,8 @@ import {
   CircularProgressbarWithChildren,
   buildStyles,
 } from "react-circular-progressbar";
-import { NewVisitsData } from "../../../../utils/dataProcessor";
 import { useTranslation } from "react-i18next";
+import { NewVisitsData } from "../../../../models/Interfaces";
 
 interface NewVisitsPlotProps {
   data: NewVisitsData | null;

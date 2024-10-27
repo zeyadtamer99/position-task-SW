@@ -5,8 +5,8 @@ import {
   CircularProgressbarWithChildren,
   buildStyles,
 } from "react-circular-progressbar";
-import { SavedJobsData } from "../../../../utils/dataProcessor";
 import { useTranslation } from "react-i18next";
+import { SavedJobsData } from "../../../../models/Interfaces";
 
 interface SavedJobsPlotProps {
   data: SavedJobsData | null;

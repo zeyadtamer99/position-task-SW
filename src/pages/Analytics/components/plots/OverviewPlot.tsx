@@ -7,8 +7,8 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer } from "recharts";
-import { OverviewData } from "../../../../utils/dataProcessor";
 import { useTranslation } from "react-i18next";
+import { OverviewData } from "../../../../models/Interfaces";
 
 type FilterType = "views" | "clicks";
 interface OverviewPlotProps {

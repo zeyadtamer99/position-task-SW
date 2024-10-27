@@ -40,7 +40,8 @@
     },
     "dateRangePicker": {
       "selectMonthRange": "Selecteer maandbereik",
-      "warningMessage": "Als u 6 of meer maanden selecteert, kan de vergelijking niet worden berekend."
+      "warningMessage": "Als u 6 of meer maanden selecteert, kan de vergelijking niet worden berekend.",
+      "warningTitle": "Overschrijdt 6 maanden"
     },
     "actions": {
       "cancel": "Annuleren",

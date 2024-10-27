@@ -40,7 +40,8 @@
     },
     "dateRangePicker": {
       "selectMonthRange": "Seleccionar Rango de Meses",
-      "warningMessage": "Si seleccionas 6 o más meses, no se podrá calcular la comparación."
+      "warningMessage": "Si seleccionas 6 o más meses, no se podrá calcular la comparación.",
+      "warningTitle": "Excede los 6 meses"
     },
     "actions": {
       "cancel": "Cancelar",

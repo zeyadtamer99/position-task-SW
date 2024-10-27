@@ -8,11 +8,11 @@ import {
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import theme from "./assets/mui-theme";
 import { Suspense, lazy } from "react";
-import ErrorPage from "./global/ErrorPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useAuth } from "./hooks/useAuth";
 import "./utils/i18n";
 import LoadingSpinner from "./components/LoadingSpinner"; // Import the loading spinner
+import ErrorPage from "./components/ErrorPage";
 
 // Lazy-loaded components
 const SplashScreen = lazy(() => import("./pages/SplashScreen"));

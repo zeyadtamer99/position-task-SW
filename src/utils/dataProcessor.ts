@@ -332,10 +332,48 @@ export interface BestPerformingJobData {
 export const processBestPerformingJobsData = (
   jobs: Job[]
 ): BestPerformingJobData[] => {
+  const weights = {
+    views: 0.15,
+    clicks: 0.35,
+    saved: 0.5,
+  };
+
+  // Define maximum expected values for normalization
+  const maxValues = {
+    views: 1100, // Adjust as per your data expectations
+    clicks: 1000, // Adjust as per your data expectations
+    saved: 200, // Adjust as per your data expectations
+  };
+
   const bestPerformingJobs = jobs.map((job) => {
-    const performance =
-      job.metrics.reduce((acc, metric) => acc + metric.hires, 0) /
-      job.metrics.length;
+    // Sum up all metrics for each job
+    const totalMetrics = job.metrics.reduce(
+      (acc, metric) => {
+        acc.views += metric.views;
+        acc.clicks += metric.clicks;
+        acc.saved += metric.saved;
+        return acc;
+      },
+      { views: 0, clicks: 0, saved: 0 }
+    );
+
+    const totalEntries = job.metrics.length;
+
+    // Calculate the average and normalize each metric based on the defined max values
+    const normalizedViews = totalMetrics.views / totalEntries / maxValues.views;
+    const normalizedClicks =
+      totalMetrics.clicks / totalEntries / maxValues.clicks;
+    const normalizedSaved = totalMetrics.saved / totalEntries / maxValues.saved;
+
+    // Apply weights and compute final performance percentage
+    const weightedPerformance =
+      normalizedViews * weights.views +
+      normalizedClicks * weights.clicks +
+      normalizedSaved * weights.saved;
+
+    // Ensure performance does not exceed 100%
+    const performance = Math.min(Math.round(weightedPerformance * 100), 100);
+
     const applied = job.metrics.reduce(
       (acc, metric) => acc + metric.applies,
       0
@@ -343,9 +381,9 @@ export const processBestPerformingJobsData = (
 
     return {
       name: job.name,
-      performance: Math.round(performance),
+      performance,
       applied,
-      postedOn: job.postedOn, // Add postedOn to the data structure
+      postedOn: job.postedOn,
     };
   });
 

@@ -23,10 +23,11 @@
     "subtitles": {
       "savedJobs": "Totaal opgeslagen in de geselecteerde periode",
       "newVisits": "Bezoeken aan je vacatures in de geselecteerde periode",
-      "hires": "Aanwervingen tijdens de geselecteerde periode",
-  "applies": "Sollicitaties tijdens de geselecteerde periode",
-  "followers": "Volgers tijdens de geselecteerde periode"
+      "HiresPeriod": "Aanwervingen tijdens de geselecteerde periode",
+  "AppliesPeriod": "Sollicitaties tijdens de geselecteerde periode",
+  "FollowersPeriod": "Volgers tijdens de geselecteerde periode"
     },
+    
     "tableHeaders": {
       "name": "Naam",
       "performance": "Prestatie",
@@ -141,5 +142,7 @@
       "message": "Je moet opnieuw inloggen om toegang te krijgen tot je account.",
       "cancel": "Annuleren",
       "confirm": "Ja, uitloggen"
-    }
+    },
+    "performanceNote": "*Prestatie is gebaseerd op weergaven, klikken en opgeslagen"
+
   }

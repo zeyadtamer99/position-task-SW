@@ -16,7 +16,7 @@ import logo from "../../src/assets/images/swipework_logo.jpg";
 import { keyframes } from "@emotion/react";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { LogoutOutlined } from "@ant-design/icons"; // Import the signout icon
+import { LogoutOutlined } from "@ant-design/icons";
 import { auth } from "../firebase/firebase";
 
 const Sidebar: React.FC = () => {
@@ -132,8 +132,10 @@ const Sidebar: React.FC = () => {
             justifyContent: "center",
             padding: { xs: "6px 12px", sm: "8px 15px", md: "12px 25px" },
             background: isDutch
-              ? "linear-gradient(135deg, #98b1df, #005eff)"
-              : "linear-gradient(135deg, #fac8bb, #e67b29)",
+              ? "linear-gradient(135deg, #98b1df, #005eff)" // Dutch flag gradient
+              : isSpanish
+              ? "linear-gradient(135deg, #ffdd76, #ff6f43)" // Spanish flag gradient
+              : "linear-gradient(135deg, #ffadad, #ec1919)", // US flag gradient
             backgroundSize: "200% 200%",
             color: "#fff",
             borderRadius: "30px",

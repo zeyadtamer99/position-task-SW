@@ -149,5 +149,6 @@
     "message": "You will need to log in again to access your account.",
     "cancel": "Cancel",
     "confirm": "Yes, Sign Out"
-  }
+  },
+  "performanceNote": "*Performance is based on views, clicks, & saved"
 }

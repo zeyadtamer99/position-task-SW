@@ -142,5 +142,7 @@
       "message": "Necesitarás iniciar sesión nuevamente para acceder a tu cuenta.",
       "cancel": "Cancelar",
       "confirm": "Sí, cerrar sesión"
-    }
+    },
+    "performanceNote": "*El rendimiento se basa en vistas, clics y guardados"
+
 }

@@ -1,4 +1,3 @@
-// src/components/BestPerformingJobsPlot.tsx
 import React from "react";
 import {
   Box,
@@ -25,6 +24,9 @@ const BestPerformingJobsPlot: React.FC<BestPerformingJobsPlotProps> = ({
 
   if (!data) return null;
 
+  // Sort data by performance in descending order
+  const sortedData = [...data].sort((a, b) => b.performance - a.performance);
+
   return (
     <Box
       sx={{
@@ -34,6 +36,7 @@ const BestPerformingJobsPlot: React.FC<BestPerformingJobsPlotProps> = ({
         boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
         width: "100%",
         height: "100%",
+        position: "relative",
         overflowX: "auto",
       }}
     >
@@ -81,7 +84,7 @@ const BestPerformingJobsPlot: React.FC<BestPerformingJobsPlotProps> = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((job) => (
+            {sortedData.map((job) => (
               <TableRow
                 key={job.name}
                 sx={{
@@ -128,6 +131,21 @@ const BestPerformingJobsPlot: React.FC<BestPerformingJobsPlotProps> = ({
           </TableBody>
         </Table>
       </TableContainer>
+
+      {/* Note for Performance Calculation */}
+      <Typography
+        variant="caption"
+        sx={{
+          position: "absolute",
+          bottom: 8,
+          right: 8,
+          color: "grey.500",
+          fontSize: { xs: "0.75rem", md: "0.875rem" },
+          textAlign: "right",
+        }}
+      >
+        {t("performanceNote")}
+      </Typography>
     </Box>
   );
 };

@@ -35,6 +35,7 @@ const Login: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [emailForReset, setEmailForReset] = useState("");
   const [isSending, setIsSending] = useState(false); // Loading state for send reset link
+  const [isLoading, setIsLoading] = useState(false); // Loading state for login action
 
   useEffect(() => {
     document.title = "Sign In - SwipeWork";
@@ -95,15 +96,18 @@ const Login: React.FC = () => {
       return;
     }
 
+    setIsLoading(true); // Start loading animation
     try {
       await signInWithEmailAndPassword(auth, email, password);
       navigate("/analytics");
     } catch (error: unknown) {
       const errorMessage = isFirebaseError(error)
         ? getFirebaseErrorMessage(error.code)
-        : t("login.errors.default"); // Fallback message for unknown errors
+        : t("login.errors.default");
       setSnackbarMessage(errorMessage);
       setSnackbarOpen(true);
+    } finally {
+      setIsLoading(false); // Stop loading animation
     }
   };
 
@@ -149,7 +153,7 @@ const Login: React.FC = () => {
       <AuthHeader subtitle={t("login.subtitle")} />
       <Box sx={innerBoxStyle}>
         <Box sx={formSectionStyle}>
-          <LoginForm onSubmit={handleFormLogin} />
+          <LoginForm onSubmit={handleFormLogin} isLoading={isLoading} />
           <SocialButtons onSocialSignUp={handleSocialLogin} mode="login" />
           <Typography
             style={{ marginTop: 32, fontSize: "1.1rem", color: "white" }}

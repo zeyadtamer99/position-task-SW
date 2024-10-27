@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { Box, Button } from "@mui/material";
+import { Box, Button, CircularProgress } from "@mui/material";
 import { reusableButtonStyle } from "../../../assets/global-styles";
 import { Input } from "antd";
 import { useTranslation } from "react-i18next";
 
 interface SignUpFormProps {
   onSubmit: (fullName: string, email: string, password: string) => void;
+  isLoading: boolean;
 }
 
-const SignUpForm: React.FC<SignUpFormProps> = ({ onSubmit }) => {
+const SignUpForm: React.FC<SignUpFormProps> = ({ onSubmit, isLoading }) => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -72,8 +73,13 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSubmit }) => {
         }}
         fullWidth
         type="submit"
+        disabled={isLoading} // Disable button when loading
       >
-        {t("form.signUp")}
+        {isLoading ? (
+          <CircularProgress size={24} style={{ color: "white" }} />
+        ) : (
+          t("form.signUp")
+        )}
       </Button>
     </Box>
   );

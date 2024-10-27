@@ -34,20 +34,6 @@ const SocialButtons: React.FC<SocialButtonsProps> = ({
       <Button
         variant="contained"
         sx={{
-          backgroundColor: "#1877f2",
-          color: "#fff",
-          textTransform: "none",
-          "&:hover": { backgroundColor: "#145db2" },
-        }}
-        fullWidth
-        onClick={() => onSocialSignUp("Facebook")}
-      >
-        <FacebookOutlined style={{ fontSize: "1.5rem", marginRight: "8px" }} />
-        {buttonText} Facebook
-      </Button>
-      <Button
-        variant="contained"
-        sx={{
           backgroundColor: "#db4437",
           color: "#fff",
           textTransform: "none",
@@ -72,6 +58,20 @@ const SocialButtons: React.FC<SocialButtonsProps> = ({
       >
         <GithubOutlined style={{ fontSize: "1.5rem", marginRight: "8px" }} />
         {buttonText} GitHub
+      </Button>
+      <Button
+        variant="contained"
+        sx={{
+          backgroundColor: "#1877f2",
+          color: "#fff",
+          textTransform: "none",
+          "&:hover": { backgroundColor: "#145db2" },
+        }}
+        fullWidth
+        onClick={() => onSocialSignUp("Facebook")}
+      >
+        <FacebookOutlined style={{ fontSize: "1.5rem", marginRight: "8px" }} />
+        {buttonText} Facebook
       </Button>
     </Box>
   );

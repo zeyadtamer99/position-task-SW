@@ -9,9 +9,9 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { BestPerformingJobData } from "../../../../utils/dataProcessor";
 import { formatDate } from "../../utils";
 import { useTranslation } from "react-i18next";
+import { BestPerformingJobData } from "../../../../models/Interfaces";
 
 interface BestPerformingJobsPlotProps {
   data: BestPerformingJobData[] | null;

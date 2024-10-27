@@ -28,6 +28,7 @@ const SignUp: React.FC = () => {
   const navigate = useNavigate();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // Loading state for signup action
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -89,6 +90,7 @@ const SignUp: React.FC = () => {
       return;
     }
 
+    setIsLoading(true); // Start loading animation
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -101,6 +103,8 @@ const SignUp: React.FC = () => {
       console.error("Error during form sign-up:", error);
       setSnackbarMessage(t("signup.errors.signUpFailed"));
       setSnackbarOpen(true);
+    } finally {
+      setIsLoading(false); // Stop loading animation
     }
   };
 
@@ -109,7 +113,7 @@ const SignUp: React.FC = () => {
       <AuthHeader subtitle={t("signup.subtitle")} />
       <Box sx={innerBoxStyle}>
         <Box sx={formSectionStyle}>
-          <SignUpForm onSubmit={handleFormSignUp} />
+          <SignUpForm onSubmit={handleFormSignUp} isLoading={isLoading} />
           <Box sx={separatorStyle} />
           <SocialButtons onSocialSignUp={handleSocialSignUp} />
           <Typography style={{ marginTop: 2, fontSize: "1.1rem" }}>

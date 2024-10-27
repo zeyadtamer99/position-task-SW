@@ -1,4 +1,11 @@
 //src\utils\dataProcessor.ts
+import {
+  BestPerformingJobData,
+  NewVisitsData,
+  OverviewData,
+  SavedJobsData,
+  SmallStatData,
+} from "../models/Interfaces";
 import { Job, Metrics } from "../models/Job";
 
 // Group metrics data by month
@@ -28,13 +35,6 @@ export const processJobsData = (jobs: Job[]): Record<string, Metrics[]> => {
 
   return groupedData;
 };
-
-export type FilterType = "views" | "clicks";
-
-export interface OverviewData {
-  views: number[];
-  clicks: number[];
-}
 
 export const processOverviewData = (jobs: Job[]): OverviewData => {
   const months = [
@@ -71,13 +71,6 @@ export const processOverviewData = (jobs: Job[]): OverviewData => {
   console.log("📊 Aggregated Overview Data:", initialData);
   return initialData;
 };
-
-export interface NewVisitsData {
-  totalVisits: number;
-  visitsCurrentMonth: number;
-  visitsPreviousMonth: number;
-  visitsLast3Months: number;
-}
 
 export const processNewVisitsData = (jobs: Job[]): NewVisitsData => {
   const currentDate = new Date();
@@ -145,15 +138,6 @@ export const processNewVisitsData = (jobs: Job[]): NewVisitsData => {
   console.log("👀 Processed New Visits Data Result:", result);
   return result;
 };
-
-// src/utils/processDataForPlots.ts
-export interface SavedJobsData {
-  percentage: number;
-  totalSaves: number;
-  savesCurrentMonth: number;
-  savesPreviousMonth: number;
-  savesLast3Months: number;
-}
 
 export const processSavedJobsData = (jobs: Job[]): SavedJobsData => {
   const currentDate = new Date();
@@ -227,15 +211,6 @@ export const processSavedJobsData = (jobs: Job[]): SavedJobsData => {
   console.log("💼 Processed Saved Jobs Data Result:", result);
   return result;
 };
-
-// src/utils/processDataForPlots.ts
-export interface SmallStatData {
-  title: string;
-  emoji: string;
-  number: number;
-  description: string;
-  changePercentage?: number; // New field to store percentage change
-}
 
 export const processSmallStatData = (
   jobs: Job[],
@@ -320,14 +295,6 @@ export const processSmallStatData = (
     createStatData("Hires", "✅", hires),
   ];
 };
-
-// src/utils/processDataForPlots.ts
-export interface BestPerformingJobData {
-  name: string;
-  performance: number;
-  applied: number;
-  postedOn: Date;
-}
 
 export const processBestPerformingJobsData = (
   jobs: Job[]

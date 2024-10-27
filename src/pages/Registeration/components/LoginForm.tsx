@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { Box, Button } from "@mui/material";
+import { Box, Button, CircularProgress } from "@mui/material";
 import { Input } from "antd";
 import { reusableButtonStyle } from "../../../assets/global-styles";
 import { useTranslation } from "react-i18next";
 
 interface LoginFormProps {
   onSubmit: (email: string, password: string) => void;
+  isLoading: boolean;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
+const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, isLoading }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { t } = useTranslation();
@@ -60,8 +61,13 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
         }}
         fullWidth
         type="submit"
+        disabled={isLoading} // Disable button when loading
       >
-        {t("form.login")}
+        {isLoading ? (
+          <CircularProgress size={24} style={{ color: "white" }} />
+        ) : (
+          t("form.login")
+        )}
       </Button>
     </Box>
   );
